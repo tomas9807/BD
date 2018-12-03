@@ -1,31 +1,32 @@
-CREATE TABLE marvel.lugar(
+
+CREATE TABLE IF NOT EXISTS marvel.lugar(
      id INTEGER UNSIGNED AUTO_INCREMENT,
-    id_padre INTEGER NULL,
+    id_padre INTEGER UNSIGNED NULL,
      nombre VARCHAR(256) NOT NULL UNIQUE,
      tipo ENUM('universo','planeta','pais','estado','ciudad'),
     PRIMARY KEY (id),
     FOREIGN KEY (id_padre) REFERENCES marvel.lugar(id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=INNODB;
 
-CREATE TABLE marvel.afiliacion(
+CREATE TABLE IF NOT EXISTS marvel.afiliacion(
      id INTEGER UNSIGNED AUTO_INCREMENT,
-    id_base_lugar INTEGER NOT NULL,
+    id_base_lugar INTEGER  UNSIGNED NOT NULL,
      nombre VARCHAR(256) NOT NULL UNIQUE,
      
     PRIMARY KEY (id),
     FOREIGN KEY (id_base_lugar) REFERENCES marvel.lugar(id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=INNODB;
 
-CREATE TABLE marvel.evento(
+CREATE TABLE IF NOT EXISTS marvel.evento(
      id INTEGER UNSIGNED AUTO_INCREMENT,
      fecha_hora_inicio DATETIME NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 )ENGINE=INNODB;
 
 
-CREATE TABLE marvel.grupo(
+CREATE TABLE IF NOT EXISTS marvel.grupo(
      id INTEGER UNSIGNED AUTO_INCREMENT,
-    id_evento INTEGER NOT NULL,
+    id_evento INTEGER UNSIGNED NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_evento) REFERENCES marvel.evento(id) ON DELETE RESTRICT ON UPDATE CASCADE
 )ENGINE=INNODB;
