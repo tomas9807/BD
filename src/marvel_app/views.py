@@ -57,6 +57,23 @@ def personajes(keyword=None,data_type=None,pk=None):
 
     return render_template('personajes.html',title=title)
 
+def get_tipo_str(tipo):
+    tipos_geograficos = ('pais','estado','ciudad','zona')
+    return 'tipo_greografico' if tipo in tipos_geograficos else 'tipo'
+
+@app.route('/lugares/get/<tipo_padre>/<id_padre>/<tipo_hijo>',methods=['POST','GET'])
+@app.route('/lugares/get/<tipo_padre>/<id_padre>/<tipo_hijo>/<pk>',methods=['POST','GET'])
+def lugares(tipo_padre,id_padre,tipo_hijo,pk=None):
+    tipo_str_hijo = get_tipo_str(tipo_hijo)
+    if not pk:
+        data = models.select_query(f"""
+        select hijo.id,hijo.nombre from Lugar as hijo where hijo.tipo={tipo_str_hijo} and hijo.id_padre={id_padre}
+        """ 
+        )
+        return jsonify(data)
+
+
+
 
 
     

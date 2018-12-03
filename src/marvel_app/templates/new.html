@@ -4,6 +4,58 @@
 {% block content %}
 
 
+<!-- Modal nombre y descripcion-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Agregar  </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <input type="text" name="insert_info" id="modal_nombre" class="form-control" placeholder="Nombre">
+          <input type="text" class="form-control" placeholder="Descripcion(opcional)" id='modal_descripcion'>
+          <div id='select_parafernalia'> 
+            Tipo: <br> 
+            <select class='form-control'> 
+              <option value='1'> Arma </option>  <option value='2'> Armadura </option>  <option value='3'> Otro </option> 
+            </select>
+            </div>   
+     
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="modal_handler()">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+<script>
+var button_modal_name_clicked;
+
+function set_modal(str){
+  button_modal_name_clicked = str;
+  document.getElementById("exampleModalCenterTitle").innerHTML = 'Agregar '  + str;
+  if (str=='parafernalia'){
+   document.getElementById("select_parafernalia").style.display = 'initial';
+  }
+  else {
+    document.getElementById("select_parafernalia").style.display = 'none';
+  }
+}
+
+
+</script>
+
 <form action="{{url_for('personajes',keyword='new')}}" method='post' class="container form" >
     {{ form.hidden_tag() }}
   {% if type=='personaje' %}
@@ -78,39 +130,150 @@
               <br>
       {{form.otros_alias.label}} {{form.otros_alias()}} <br>
       <hr>
-      <div class='row'>
+      <div class='row' id="row_profesion">
         
         <div class="col-sm-12">{{form.profesion.label}}<small> (opcional)</small></div>
         {{form.profesion(class="custom-select ml-3 col-sm-9")}}   
-        <button type="button" class="btn btn-primary mx-auto col-sm-2" data-toggle="modal" data-target="#exampleModalCenter">
+        <button type="button" onclick="set_modal('profesion')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" s data-toggle="modal" data-target="#exampleModalCenter">
             Agregar Nuevo
           </button>
       </div>
       <hr>
 
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.lugar_nacimiento_universo.label}}<small> (opcional)</small></div>
+        {{form.lugar_nacimiento_universo(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" onclick="set_modal('universo')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.lugar_nacimiento_planeta.label}}<small> (opcional)</small></div>
+        {{form.lugar_nacimiento_planeta(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" id="btn_planeta" onclick="set_modal('planeta')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.lugar_nacimiento_pais.label}}<small> (opcional)</small></div>
+        {{form.lugar_nacimiento_pais(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" id="btn_pais" onclick="set_modal('pais')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.lugar_nacimiento_estado.label}}<small> (opcional)</small></div>
+        {{form.lugar_nacimiento_estado(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" id="btn_estado" onclick="set_modal('estado')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+
+
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.lugar_nacimiento_ciudad.label}}<small> (opcional)</small></div>
+        {{form.lugar_nacimiento_ciudad(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" id="btn_ciudad" onclick="set_modal('ciudad')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.lugar_nacimiento_zona_especifica.label}}<small> (opcional)</small></div>
+        {{form.lugar_nacimiento_zona_especifica(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" id="btn_zona" onclick="set_modal('zona especifica')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+
+      <hr>
+    
+        
+        {{form.parientes.label}} <br>
+        {{form.parientes(class="custom-select ml-3 col-sm-9")}}   
        
-      {{form.lugar_nacimiento_universo.label}} {{form.lugar_nacimiento_universo()}} <br>
-      {{form.lugar_nacimiento_planeta.label}} {{form.lugar_nacimiento_planeta()}} <br>
-      {{form.lugar_nacimiento_pais.label}} {{form.lugar_nacimiento_pais()}} <br>
-      {{form.lugar_nacimiento_estado.label}} {{form.lugar_nacimiento_estado()}} <br>
-      {{form.lugar_nacimiento_ciudad.label}} {{form.lugar_nacimiento_ciudad()}} <br>
-      {{form.lugar_nacimiento_zona_especifica.label}} {{form.lugar_nacimiento_zona_especifica()}} <br>
+
+      <hr>
       
+        
+       {{form.aliados.label}} <br>
+        {{form.aliados(class="custom-select ml-3 col-sm-9")}}   
+        
+   
+      <hr>
+       
+      <hr>
+      
+        
+        {{form.enemigos.label}} <br>
+        {{form.enemigos(class="custom-select ml-3 col-sm-9")}}   
+      
+      
+      <hr>
+       
+      <hr>
+      
+        
+        {{form.afiliacion.label}} <br>
+        {{form.afiliacion(class="custom-select ml-3 col-sm-9")}}   
+      
+      
+      <hr>
+       
+       
+       
+       
 
-
-      {{form.parientes.label}} {{form.parientes()}} <br>
-      {{form.aliados.label}} {{form.aliados()}} <br>
-      {{form.enemigos.label}} {{form.enemigos()}} <br>
-      {{form.afiliacion.label}} {{form.afiliacion()}} <br>
       {{form.peso1.label}} {{form.peso1()}} <br>
       {{form.peso2.label}} {{form.peso2()}} <br>
       {{form.altura1.label}} {{form.altura1()}} <br>
       {{form.altura2.label}} {{form.altura2()}} <br>
+
       {{form.color_ojos.label}} {{form.color_ojos()}} <br>
       {{form.color_pelo.label}} {{form.color_pelo()}} <br>
-      {{form.poderes.label}} {{form.poderes()}} <br>
-      {{form.parafernalia.label}} {{form.parafernalia()}} <br>
-  
+
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.poderes.label}}<small> (opcional)</small></div>
+        {{form.poderes(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" onclick="set_modal('poder')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+      <hr>
+      <div class='row'>
+        
+        <div class="col-sm-12">{{form.parafernalia.label}}<small> (opcional)</small></div>
+        {{form.parafernalia(class="custom-select ml-3 col-sm-9")}}   
+        <button type="button" onclick="set_modal('parafernalia')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
+            Agregar Nuevo
+          </button>
+      </div>
+      <hr>
+   
   
     
       Habilidades: <br>
@@ -130,27 +293,7 @@
     
    
       
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">Agregar Nueva Profesion</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <input type="text" name="insert_info" id="modal_nombre" class="form-control" placeholder="Nombre">
-              <input type="text" class="form-control" placeholder="Descripcion(opcional)" id='modal_descripcion'>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" onclick="send_info()">Aceptar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
 
   </div>
@@ -179,21 +322,68 @@
 {% block custom_js %}
 <script>
     
+   function modal_handler(){
+
+    let nombre = document.getElementById('modal_nombre');
+    let descripcion = document.getElementById('modal_descripcion');
+    let url = '/personajes/' + button_modal_name_clicked + '/';
+    let json = JSON.stringify({'nombre':nombre.value,'descripcion':descripcion.value});
+      send_ajax_call(json,url);
+     nombre.value = '';
+     descripcion.value ='';
+   }
+
+
+  function update_select_withjson(list,array){
+    let optionhtml = '';
+    //Create and append the options
+    for (var i = 0; i < array.length; i++) {
+        optionhtml += '<option value="' + array[i][0] + '">' + array[i][1] + '</option>';
+
+    }
+    console.log(optionhtml);
+    list.innerHTML = optionhtml;
+
+  }
+
+     let list_universo = document.getElementById('lugar_nacimiento_universo');
+     let list_planeta = document.getElementById('lugar_nacimiento_planeta');
+     list_universo.onchange = function(){
+      let value = list_universo.options[list_universo.selectedIndex].value
+      let url = '/lugares/get/' + 'universo/'  + value + '/' +  'planeta' ;
+       
+         if (value){
+          send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
+         }
+     };
     
+     function changeDisabledState( elm, disabled ) {
+  if ( !disabled ) {
+    elm.removeAttribute( 'disabled' );
+  }
+  else {
+    elm.setAttribute( 'disabled', disabled );
+  }
+}
 
     
-    function send_info(){
+    function send_ajax_call(json,url,to_return=false,callback,list){
+   
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "{{url_for('personajes',data_type='profesion')}}",true);
+    xmlhttp.open("POST", url,true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
+    if (to_return){
+      xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        var json = JSON.parse(xmlhttp.responseText);
+        callback(list,json);
+    }
+     };
+    }
     
-    var nombre = document.getElementById('modal_nombre');
-    var descripcion = document.getElementById('modal_descripcion');
-    xmlhttp.send(JSON.stringify({'nombre':nombre.value,'descripcion':descripcion.value}));
-    nombre.value = '';
-    descripcion.value = '';
-
-
+    
+    xmlhttp.send(json);
+    
     }
     
     
@@ -203,7 +393,7 @@
     selectList.onfocus = function(){
 
       let xmlhttp = new XMLHttpRequest();
-let url = "{{url_for('personajes',data_type='profesion')}}";
+      let url = '/personajes/' + button_modal_name_clicked + '/';
 
 xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
