@@ -143,7 +143,7 @@ function set_modal(str){
       <hr>
       <div class='row'>
         
-        <div class="col-sm-12">{{form.lugar_nacimiento_universo.label}}<small> (opcional)</small></div>
+        <div class="col-sm-12">{{form.lugar_nacimiento_universo.label}}</div>
         {{form.lugar_nacimiento_universo(class="custom-select ml-3 col-sm-9")}}   
         <button type="button" onclick="set_modal('universo')" class="btn btn-primary mx-auto col-sm-2 h-50 justify-content-center align-self-center" data-toggle="modal" data-target="#exampleModalCenter">
             Agregar Nuevo
@@ -322,6 +322,31 @@ function set_modal(str){
 {% block custom_js %}
 <script>
     
+    const endpoint_url_lugar = '/lugares/get';
+  const list_keys = [
+      
+      {  nombre : 'universo',
+        list: document.getElementById('lugar_nacimiento_universo'),
+      },
+      {  nombre : 'planeta',
+        list: document.getElementById('lugar_nacimiento_planeta'),
+      },
+      {  nombre : 'pais',
+        list: document.getElementById('lugar_nacimiento_pais'),
+      },
+      {  nombre : 'estado',
+        list: document.getElementById('lugar_nacimiento_estado'),
+      },
+      {  nombre : 'ciudad',
+        list: document.getElementById('lugar_nacimiento_ciudad'),
+      },
+      {
+        nombre : 'zona',
+        list: document.getElementById('lugar_nacimiento_zona_especifica'),
+      }
+  ];
+
+
    function modal_handler(){
 
     let nombre = document.getElementById('modal_nombre');
@@ -341,21 +366,138 @@ function set_modal(str){
         optionhtml += '<option value="' + array[i][0] + '">' + array[i][1] + '</option>';
 
     }
-    console.log(optionhtml);
+    
     list.innerHTML = optionhtml;
 
   }
 
-     let list_universo = document.getElementById('lugar_nacimiento_universo');
-     let list_planeta = document.getElementById('lugar_nacimiento_planeta');
-     list_universo.onchange = function(){
-      let value = list_universo.options[list_universo.selectedIndex].value
-      let url = '/lugares/get/' + 'universo/'  + value + '/' +  'planeta' ;
+
+function send_ajax_call_lugar(json,url,html_list,counter,object_lists,to_return=false){
+   
+   var xmlhttp = new XMLHttpRequest();
+   xmlhttp.open("POST", url,true);
+   xmlhttp.setRequestHeader("Content-Type", "application/json");
+   if (to_return){
+     xmlhttp.onreadystatechange = function () {
+   if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+     
+       var json = JSON.parse(xmlhttp.responseText);
+       console.log('good',json,html_list);
+       update_select_withjson(html_list,json);
+       update_list_lugar(object_lists,counter);
+
+   }
+    };
+   }
+   
+   
+   xmlhttp.send(json);
+   
+   }
+
+
+
+  function update_list_lugar(object_lists,counter=1){
+    
+      if (counter < object_lists.length){
+        console.log("entro " + counter,object_lists.length);
+      let url = endpoint_url_lugar + '/' + object_lists[counter].nombre;
+      let father_list = object_lists[counter-1].list;
+      let child_list = object_lists[counter].list;
+      console.log(father_list,father_list.options.length,father_list.selectedIndex);
+      if (father_list.options.length){
+ 
+        let value = father_list.options[father_list.selectedIndex].value;
+        url += '/' + String(value);
+        console.log(url);
+        send_ajax_call_lugar(
+        JSON.stringify({'value':value}),
+        url,
+        child_list,
+        counter + 1,
+        object_lists,
+        true
+        );
+
+      
+      } 
+      
+    
+     
+
+    
+  
+    
+
+      }
+  }
+
+  
+  function get_object_lists(key_name){
+
+    for (let i = 0; i < list_keys.length; i++) {
+        if (key_name==list_keys[i].nombre){
+
+          return list_keys.slice(i,list_keys.length-1);
+        }
+    }
+    
+  }
+
+     
+   let list_uni = document.getElementById('lugar_nacimiento_universo');
+       list_uni.onchange =  function(){
+        update_list_lugar(
+         get_object_lists('universo')
+       );
+
+       };
        
-         if (value){
-          send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
-         }
-     };
+       
+     
+    //  list_planeta.onchange = function(){
+    //   let value = list_universo.options[list_universo.selectedIndex].value
+
+    //      if (value){
+    //       send_ajax_call(JSON.stringify({'nombre':value}),url_,true,update_select_withjson,list_planeta);
+        
+          
+    //      }
+    //  };
+    //  list_pais.onchange = function(){
+    //   let value = list_universo.options[list_universo.selectedIndex].value
+      
+       
+    //      if (value){
+    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
+    //      }
+    //  };
+    //  list_estado.onchange = function(){
+    //   let value = list_universo.options[list_universo.selectedIndex].value
+
+       
+    //      if (value){
+    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
+    //      }
+    //  };
+    //  list_ciudad.onchange = function(){
+    //   let value = list_universo.options[list_universo.selectedIndex].value
+  
+       
+    //      if (value){
+    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
+    //      }
+    //  };
+    //  list_zona.onchange = function(){
+    //   let value = list_universo.options[list_universo.selectedIndex].value
+     
+       
+    //      if (value){
+    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
+    //      }
+    //  };
+
+
     
      function changeDisabledState( elm, disabled ) {
   if ( !disabled ) {
@@ -385,6 +527,9 @@ function set_modal(str){
     xmlhttp.send(json);
     
     }
+
+    
+   
     
     
     
@@ -405,7 +550,7 @@ xmlhttp.onreadystatechange = function() {
         optionhtml += '<option value="' + array[i][0] + '">' + array[i][1] + '</option>';
 
     }
-    console.log(optionhtml);
+   
     selectList.innerHTML = optionhtml;
 
     }
