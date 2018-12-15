@@ -18,9 +18,7 @@
 --
 -- Table structure for table `Afiliacion_Personaje`
 --
-DROP SCHEMA IF EXISTS marvel;
-CREATE SCHEMA IF NOT EXISTS marvel;
-USE marvel
+
 DROP TABLE IF EXISTS `Afiliacion_Personaje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
@@ -198,12 +196,6 @@ CREATE TABLE `Color` (
 -- Dumping data for table `Color`
 --
 
-LOCK TABLES `Color` WRITE;
-/*!40000 ALTER TABLE `Color` DISABLE KEYS */;
-INSERT INTO `Color` VALUES (3,'Amarillo'),(10,'Anaranjado'),(1,'Azul'),(6,'Gris'),(7,'Marron'),(2,'Morado'),(8,'Negro'),(5,'Rojo'),(9,'Rosado'),(4,'Verde');
-/*!40000 ALTER TABLE `Color` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `Enfrentamiento`
 --
@@ -349,24 +341,20 @@ CREATE TABLE `Lugar` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_padre` int(10) unsigned DEFAULT NULL,
   `nombre` varchar(256) NOT NULL,
-  `tipo` enum('universo','galaxia','planeta','mundo mitologico') DEFAULT NULL,
-  `tipo_geografico` enum('pais','estado','ciudad','zona') DEFAULT NULL,
+  `tipo` enum('universo','galaxia','planeta','mundo_mitologico','dimension_magica') DEFAULT NULL,
+  `tipo_geografico` enum('pais','estado','ciudad','localizacion') DEFAULT NULL,
   `descripcion` text,
   PRIMARY KEY (`id`),
   KEY `id_padre` (`id_padre`),
   CONSTRAINT `Lugar_ibfk_1` FOREIGN KEY (`id_padre`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Lugar`
 --
 
-LOCK TABLES `Lugar` WRITE;
-/*!40000 ALTER TABLE `Lugar` DISABLE KEYS */;
-INSERT INTO `Lugar` VALUES (1,NULL,'Tierra 616','universo',NULL,'es el universo original de Marvel donde se originan la mayoría de las historias y\npersonajes, de hecho este es el espacio de las series clásicas como X- Men, The Amazing\nSpider-Man y Fantastic Four'),(2,NULL,'House of M','universo',NULL,'es un universo que deriva de Tiera 616 donde los mutantes son quienes\npredominan. Debido a la acción de la Bruja Escarlata ningun ser humano recuerda como\nsolía ser su mundo, excepto los agentes de SHIELD y Wolverine.'),(3,NULL,'Ultimate','universo',NULL,'se puede decir que es el universo donde todo vuelve a comenzar. En este universo los\nsuperhéroes presentan características diferentes a las del original, por ejemplo, el Ultimate\nSpider-Man es Miles Morales que es una persona afroamericana con ascendencia latina.'),(4,NULL,'Age of Apocalypse','universo',NULL,'es producto de un accidente temporal cuando Legion, hijo del profesor\nX, viaja al pasado para asesinar a Magneto, pero por un error mata a su propio padre, lo que\nprovoca el ascenso de Apocalipsis como señor de la Tierra. En este Universo, también\nconocido como Tierra 295, los humanos se revelan junto a Reed Richards y Tony Stark.'),(5,NULL,'Marvel 2099','universo',NULL,'es el universo del futuro en este lugar las grandes corporaciones controlan un\nmundo dividido por una guerra entre humanos y mutantes, aquí surgen historias como Spider-\nMan 2099, X-Men 2099 y Fantastic Four 2099 entre otros.'),(6,NULL,'Marvel Noir','universo',NULL,'por alguna razón, la mayoría de los personajes no tienen poderes, a excepción\nde Spider-Man.'),(7,NULL,'Marvel Zombies','universo',NULL,'es el mundo de los muertos vivientes, en éste mundo los superhéroes y villanos\nson infectados por un virus alienígena que los convierte en zombies.'),(8,NULL,'Ucronías','universo',NULL,'es el universo donde los escritores se preguntaron “que hubiese pasado si...”. En esta\nlínea temporal hay cosas que nunca sucedieron o sucedieron de forma diferente, por ejemplo\nBruce Banner es mordido por una araña radioactiva que lo convierte en Spider-Man mientras\nque Peter Parker se inyecta la fórmula que lo convierte en Hulk.'),(9,NULL,'Larval Universe','universo',NULL,'también conocido como Tierra 8311, es el universo donde los personajes\nconocidos se presentan como una versión animal: Spider-Ham, Fantastic Fur y el Capitán\nAmericat, entre otros.');
-/*!40000 ALTER TABLE `Lugar` ENABLE KEYS */;
-UNLOCK TABLES;
+
 
 --
 -- Table structure for table `Parafernalia`
@@ -443,6 +431,7 @@ CREATE TABLE `Personaje_Competidor` (
   `color_ojos_id` int(10) unsigned NOT NULL,
   `color_pelo_id` int(10) unsigned NOT NULL,
   `id_lugar_nacimiento` int(10) unsigned NOT NULL,
+  `foto_path` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `color_ojos_id` (`color_ojos_id`),
   KEY `color_pelo_id` (`color_pelo_id`),
@@ -502,6 +491,7 @@ DROP TABLE IF EXISTS `Poder`;
 CREATE TABLE `Poder` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(256) NOT NULL,
+  `descripcion` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -552,19 +542,15 @@ CREATE TABLE `Profesion` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(256) NOT NULL,
   `descripcion` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Profesion`
 --
 
-LOCK TABLES `Profesion` WRITE;
-/*!40000 ALTER TABLE `Profesion` DISABLE KEYS */;
-INSERT INTO `Profesion` VALUES (1,'Ing. Electrico','La ingeniería eléctrica es el campo de la ingeniería que se ocupa del estudio y la aplicación de la electricidad, la electrónica y el electromagnetismo'),(2,'Inventor','Inventor o inventora es la persona que idea, crea, concibe, construye o desarrolla algo que no existía antes'),(3,'Ing. Industrial','La ingeniería industrial es una de las ramas de la ingeniería, y se ocupa de la optimización de uso de recursos humanos, técnicos e informativos'),(4,'Ing. Electrico','La ingeniería eléctrica es el campo de la ingeniería que se ocupa del estudio y la aplicación de la electricidad, la electrónica y el electromagnetismo'),(5,'Inventor','Inventor o inventora es la persona que idea, crea, concibe, construye o desarrolla algo que no existía antes'),(6,'Ing. Industrial','La ingeniería industrial es una de las ramas de la ingeniería, y se ocupa de la optimización de uso de recursos humanos, técnicos e informativos');
-/*!40000 ALTER TABLE `Profesion` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Profesion_Competidor`
@@ -626,6 +612,31 @@ LOCK TABLES `Relacion` WRITE;
 /*!40000 ALTER TABLE `Relacion` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Relacion` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `np`
+--
+
+DROP TABLE IF EXISTS `np`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `np` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) NOT NULL,
+  `descripcion` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `np`
+--
+
+LOCK TABLES `np` WRITE;
+/*!40000 ALTER TABLE `np` DISABLE KEYS */;
+/*!40000 ALTER TABLE `np` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -636,4 +647,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-01 16:06:14
+-- Dump completed on 2018-12-15 13:24:26

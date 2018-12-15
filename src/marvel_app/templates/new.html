@@ -41,7 +41,8 @@
 
 <script>
 var button_modal_name_clicked;
-
+const endpoint_url_lugar = '/lugares/get';
+const endpoint_url_personajes = /personajes/;
 function set_modal(str){
   button_modal_name_clicked = str;
   document.getElementById("exampleModalCenterTitle").innerHTML = 'Agregar '  + str;
@@ -322,36 +323,42 @@ function set_modal(str){
 {% block custom_js %}
 <script>
     
-    const endpoint_url_lugar = '/lugares/get';
-  const list_keys = [
+  var list_universo = document.getElementById('lugar_nacimiento_universo');
+  var list_planeta = document.getElementById('lugar_nacimiento_planeta');
+  var list_pais = document.getElementById('lugar_nacimiento_pais');
+  var list_estado = document.getElementById('lugar_nacimiento_estado');
+  var list_ciudad = document.getElementById('lugar_nacimiento_ciudad');
+  var list_zona = document.getElementById('lugar_nacimiento_zona_especifica');
+
+  const lists_lugares = [
       
       {  nombre : 'universo',
-        list: document.getElementById('lugar_nacimiento_universo'),
+        list: list_universo,
       },
       {  nombre : 'planeta',
-        list: document.getElementById('lugar_nacimiento_planeta'),
+        list: list_planeta,
       },
       {  nombre : 'pais',
-        list: document.getElementById('lugar_nacimiento_pais'),
+        list: list_pais,
       },
       {  nombre : 'estado',
-        list: document.getElementById('lugar_nacimiento_estado'),
+        list: list_estado,
       },
       {  nombre : 'ciudad',
-        list: document.getElementById('lugar_nacimiento_ciudad'),
+        list: list_ciudad,
       },
       {
         nombre : 'zona',
-        list: document.getElementById('lugar_nacimiento_zona_especifica'),
+        list: list_zona,
       }
   ];
 
 
-   function modal_handler(){
+   function modal_handler(endpoint){
 
     let nombre = document.getElementById('modal_nombre');
     let descripcion = document.getElementById('modal_descripcion');
-    let url = '/personajes/' + button_modal_name_clicked + '/';
+    let url = endpoint + button_modal_name_clicked + '/';
     let json = JSON.stringify({'nombre':nombre.value,'descripcion':descripcion.value});
       send_ajax_call(json,url);
      nombre.value = '';
@@ -359,7 +366,8 @@ function set_modal(str){
    }
 
 
-  function update_select_withjson(list,array){
+  function update_html_list(html_list,array){
+    console.log('array',array);
     let optionhtml = '';
     //Create and append the options
     for (var i = 0; i < array.length; i++) {
@@ -367,30 +375,35 @@ function set_modal(str){
 
     }
     
-    list.innerHTML = optionhtml;
+    html_list.innerHTML = optionhtml;
 
   }
 
 
-function send_ajax_call_lugar(json,url,html_list,counter,object_lists,to_return=false){
+function send_ajax_call(json,url,object_args=false){
    
    var xmlhttp = new XMLHttpRequest();
    xmlhttp.open("POST", url,true);
    xmlhttp.setRequestHeader("Content-Type", "application/json");
-   if (to_return){
+   if (object_args){
      xmlhttp.onreadystatechange = function () {
    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
      
-       var json = JSON.parse(xmlhttp.responseText);
-       console.log('good',json,html_list);
-       update_select_withjson(html_list,json);
-       update_list_lugar(object_lists,counter);
+       var json_received = JSON.parse(xmlhttp.responseText);
+       console.log('json_received: ',json_received);
+       for(let i=0;i<object_args.length;i++){
+         func = object_args[i].func;
+         args = object_args[i].args;
+         func(...args,json_received);
+
+       }
+     
 
    }
     };
    }
    
-   
+   console.log('json_sent: ',json);
    xmlhttp.send(json);
    
    }
@@ -400,103 +413,74 @@ function send_ajax_call_lugar(json,url,html_list,counter,object_lists,to_return=
   function update_list_lugar(object_lists,counter=1){
     
       if (counter < object_lists.length){
-        console.log("entro " + counter,object_lists.length);
+      
       let url = endpoint_url_lugar + '/' + object_lists[counter].nombre;
       let father_list = object_lists[counter-1].list;
       let child_list = object_lists[counter].list;
-      console.log(father_list,father_list.options.length,father_list.selectedIndex);
-      if (father_list.options.length){
  
+      if (father_list.options.length){
+        changeDisabledState(child_list,false);
         let value = father_list.options[father_list.selectedIndex].value;
         url += '/' + String(value);
-        console.log(url);
-        send_ajax_call_lugar(
-        JSON.stringify({'value':value}),
-        url,
-        child_list,
-        counter + 1,
-        object_lists,
-        true
-        );
+        console.log('url lugar: ',url);
+        let json = JSON.stringify({'value':value});
+        let object_args = [
+          {
+            func: update_html_list,
+            args: [child_list,]
+          },
+          {
+            func: update_list_lugar,
+            args : [object_lists,counter+1]
+          }
+        ]
+       
+        send_ajax_call(json,url,object_args);
 
       
+      }else{
+        for(let i=counter-1;i<object_lists.length;i++){
+          disable_list = object_lists[i].list;
+          if(disable_list.options.length){
+           removeOptions(disable_list);
+          }
+          changeDisabledState(disable_list,true);
+     
+        }
+        return;
       } 
       
     
-     
-
-    
-  
     
 
       }
   }
 
   
-  function get_object_lists(key_name){
+  function get_childs_list_lugar(key_name){
 
-    for (let i = 0; i < list_keys.length; i++) {
-        if (key_name==list_keys[i].nombre){
+    for (let i = 0; i < lists_lugares.length; i++) {
+        if (key_name==lists_lugares[i].nombre){
 
-          return list_keys.slice(i,list_keys.length-1);
+          return lists_lugares.slice(i,lists_lugares.length);
         }
     }
     
   }
 
      
-   let list_uni = document.getElementById('lugar_nacimiento_universo');
-       list_uni.onchange =  function(){
-        update_list_lugar(
-         get_object_lists('universo')
-       );
-
+     for(let j=0;j<lists_lugares.length;j++){
+       lists_lugares[j].list.onchange = function(){
+         update_list_lugar(
+           get_childs_list_lugar(lists_lugares[j].nombre)
+         );
        };
-       
-       
-     
-    //  list_planeta.onchange = function(){
-    //   let value = list_universo.options[list_universo.selectedIndex].value
 
-    //      if (value){
-    //       send_ajax_call(JSON.stringify({'nombre':value}),url_,true,update_select_withjson,list_planeta);
-        
-          
-    //      }
-    //  };
-    //  list_pais.onchange = function(){
-    //   let value = list_universo.options[list_universo.selectedIndex].value
+     }
       
-       
-    //      if (value){
-    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
-    //      }
-    //  };
-    //  list_estado.onchange = function(){
-    //   let value = list_universo.options[list_universo.selectedIndex].value
 
        
-    //      if (value){
-    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
-    //      }
-    //  };
-    //  list_ciudad.onchange = function(){
-    //   let value = list_universo.options[list_universo.selectedIndex].value
-  
        
-    //      if (value){
-    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
-    //      }
-    //  };
-    //  list_zona.onchange = function(){
-    //   let value = list_universo.options[list_universo.selectedIndex].value
-     
-       
-    //      if (value){
-    //       send_ajax_call(JSON.stringify({'nombre':value}),url,true,update_select_withjson,list_planeta);
-    //      }
-    //  };
-
 
     
      function changeDisabledState( elm, disabled ) {
@@ -508,29 +492,17 @@ function send_ajax_call_lugar(json,url,html_list,counter,object_lists,to_return=
   }
 }
 
-    
-    function send_ajax_call(json,url,to_return=false,callback,list){
-   
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", url,true);
-    xmlhttp.setRequestHeader("Content-Type", "application/json");
-    if (to_return){
-      xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        var json = JSON.parse(xmlhttp.responseText);
-        callback(list,json);
+    function removeOptions(selectbox)
+{
+    var i;
+    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+    {
+        selectbox.remove(i);
     }
-     };
-    }
-    
-    
-    xmlhttp.send(json);
-    
-    }
-
+}
+  
     
    
-    
     
     
     
@@ -538,7 +510,7 @@ function send_ajax_call_lugar(json,url,html_list,counter,object_lists,to_return=
     selectList.onfocus = function(){
 
       let xmlhttp = new XMLHttpRequest();
-      let url = '/personajes/' + button_modal_name_clicked + '/';
+      let url = endpoint_url_personajes + button_modal_name_clicked + '/';
 
 xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
