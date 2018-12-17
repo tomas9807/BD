@@ -1,18 +1,20 @@
+set foreign_key_checks = 0;
 
-
-
+TRUNCATE Afiliacion;
+TRUNCATE Lugar;
+TRUNCATE Base_Afiliacion;
 INSERT INTO Afiliacion(id,nombre,descripcion) VALUES 
 (1,'X-Men','The X-Men are a privately owned security force created to harbor peace between the emerging homo superior, nicknamed "Mutants" and baseline humans. '),
 (2,'Avengers',"The Avengers are a team of extraordinary individuals with special abilities and the will to do good in the world."),
 (3,'Defenders (Manhattan)',"When the trio of heroes Daredevil, Iron Fist and Luke Cage interfered with the operations of rising crime lord Diamondback, they were dealt heavy blows in retaliation.As they were looking for leads on Diamondback together with Luke's wife Jessica Jones, Daredevil noticed it could help people know that they actively worked together. They continued operating as a team to investigate Diamondback, and eventually became known as the Defenders."),
 (4,'Defenders',"Continuously thrown together by various circumstances, the team came to call themselves The Defenders and protect Earth from usually otherworldly attacks. Many members of the team aren't particularly fond of their teammates, with fights frequently breaking out and many labeling the group as a 'non-team' for the way they act"),
 (5,'Midnight Sons','Nine beings with ties to the occult were drawn together by Doctor Strange to battle Lilith and her demonic children, the Lilin'),
-(6,'Heroes for Hire (Power Man & Iron Fist)','Heroes For Hire, Inc. is a small business licensed by the state of New York which offered a full line of professional investigation and protection services. '),
-(7,'Rand Corporation',"Entrepreneur Wendell Rand and co-founder Harold Meachum established Rand-Meachum Incorporated as foundation for their research and investment enterprise. "),
+(6,'Heroes for Hire (Power Man & Iron Fist)','Heroes For Hire, Inc. is a small business licensed by the state of New York which offered a full line of professional investigation and protection services.'),
+(7,'Rand Corporation',"Entrepreneur Wendell Rand and co-founder Harold Meachum established Rand-Meachum Incorporated as foundation for their research and investment enterprise."),
 (8,'Immortal Weapons',"The champions of the Seven Capital Cities of Heaven, each are skilled in martial arts and able to manipulate Chi energy in various ways."),
 (9,'Heroes for Hire (Knight & Wing)',"During the Civil War; Misty Knight and Colleen Wing were contacted by Iron Man, Reed Richards, and Spider-Man to reform Heroes for Hire in order to track down superhumans refusing to comply with the Superhuman Registration Act. "),
 (10,'New Avengers','The New Avengers first assembled by chance during a breakout occurred at the Raft, an island prison designed to hold super-criminals. Luke Cage (acting as a hired bodyguard) was escorting attorneys Foggy Nelson and Matt Murdock (Daredevil) to meet with the Sentry as it was occurring. Spider-Man, Captain America, and Iron Man all arrived to help keep order.'),
-(11,'Thunderbolts','Conceived as a new incarnation of the Masters of Evil, the Thunderbolts were initially formed by Baron Zemo.')
+(11,'Thunderbolts','Conceived as a new incarnation of the Masters of Evil, the Thunderbolts were initially formed by Baron Zemo.'),
 (12,'Heroes for Hire (Oracle Inc.)','Following up on the status of the Oracle corporation that Namor, Jim Hammond (the Golden Age Human Torch) and Danny Rand decided to set up a new Heroes For Hire organization.'),
 (13,'Secret Avengers (Civil War)',"The Secret Avengers were founded by Captain America in response to the Superhuman Registration Act, set up precisely for those who wanted to fight against Iron Man's initiative for superhuman registration."),
 (14,'Secret Defenders','With the Defenders disbanded, Dr. Strange organized his own "Secret Defenders" project, recruiting whichever heroes he required for a given mission, with no ongoing members.'),
@@ -35,11 +37,12 @@ INSERT INTO Afiliacion(id,nombre,descripcion) VALUES
 (31,'Council of Cross-Time Kangs','The Council of Cross-Time Kangs was a group of several Humans, aliens and other creatures who took the guise of Kang the Conqueror after defeating the various robots used by the Prime Kang to rule multiple realities at the same time.'),
 (32,'Legion Accursed','Mephisto sent his agent Bitterhorn out to Earth to recruit an army of super-villains to battle the Beyonder. Bitterhorn begins by making deals with the Juggernaut, Electro, Baron Mordo, Absorbing Man and Titania. '),
 (33,'Hel-Rangers',"The Hel-Rangers consisted of exiled inhabitants from other domains due to crimes they had committed and were sent to The Shield forever to guard the rest of Battleworld from the Zombies of the Deadlands, the Ultron Sentinels of Perfection, and the Annihilation Wave of New Xandar."),
-(34,'Sons of Yinsen','A number of young men who had been enslaved by Wong-Chu learned of Ho Yinsen and Iron Man.')
+(34,'Sons of Yinsen','A number of young men who had been enslaved by Wong-Chu learned of Ho Yinsen and Iron Man.'),
 (35,'Lethal Legion','The Lethal Legion were a super-villain team gathered by Grim Reaper to defeat the Avengers.'),
-(36,'Masters of Evil','The Masters of Evil were a team of supervillains.')
+(36,'Masters of Evil','The Masters of Evil were a team of supervillains.'),
 (37,'Gods of Asgard','The Asgardians are a humanoid race of extradimensional beings that hail from Asgard, a small pocket-dimension adjacent to Earth. '),
-(38,'Hell Lords','The Hell-Lords are powerful demons each in control of their respective "Hell" dimensions and are known to use the title of "Satan" to manipulate mortals. '),
+(38,'Hell Lords','The Hell-Lords are powerful demons each in control of their respective "Hell" dimensions and are known to use the title of "Satan" to manipulate mortals. ')
+;
 
 
 
@@ -63,7 +66,7 @@ INSERT INTO Base_Operacion(id,id_lugar,id_universo,nombre,descripcion) VALUES
 (17,1,80,"Captain America's townhouse",null),
 (18,1,65,"Stark Tower","was designed by Tony Stark with the intention to serve as a gleaming beacon of modern architecture."),
 (19,1,82,'Thunderbolts Clubhouse',null),
-(20,1,83.'The Raft','The Raft was a super maximum security prison for super-powered criminals'),
+(20,1,83,'The Raft','The Raft was a super maximum security prison for super-powered criminals'),
 (21,1,79,'Thunderbolt Mountain',null),
 (22,1,80,'Thunderbolts Headquarters',null),
 (23,1,85,'Four Freedoms Plaza',"Four Freedoms Plaza was the replacement headquarters for the Fantastic Four when their original dwelling, the Baxter Building, was destroyed by Kristoff Vernard the adoptive son of Doctor Doom. "),
@@ -94,8 +97,8 @@ INSERT INTO Base_Operacion(id,id_lugar,id_universo,nombre,descripcion) VALUES
 (48,1,99,"K'un-Lun (Avengers' Base)",null),
 (49,15,null,'Interdimensional Council of Reeds (Base)',null),
 (50,1,100,'State University',"State University is one of the best private university's in the United States of America. It is located in Hegeman, New York State."),
-(51,1,101,'Tuktoyatuk','small town in the Yukon of Canada')
-(52,15,null,"Amazing Arachnids (Base)",null)
+(51,1,101,'Tuktoyatuk','small town in the Yukon of Canada'),
+(52,15,null,"Amazing Arachnids (Base)",null),
 (53,10,14,'Loomworld',"Loomworld was an Earth conquered by the Inheritors and is being used as their main domain to travel the Multiverse with the unwilling help of the Master Weaver's dimensional portals to hunt the Spider-Totems."),
 (54,11,103,'Oscorp Tower',"Oscorp was the main headquarter of the Oscorp until Liz Allan took over the building as the hub of Alchemax"),
 (55,11,104,'ChinaTown (Base)',null),
@@ -104,7 +107,7 @@ INSERT INTO Base_Operacion(id,id_lugar,id_universo,nombre,descripcion) VALUES
 (58,1,72,'Horizon University',"It is staffed by the organization formerly known as the Parker Institute for Technology."),
 (59,14,105,'Empire State University','Empire State University (ESU) officially Empire State University in the City of New York is a private, Ivy League, research university in Upper Manhattan, New York City.'),
 (60,15,null,'Chronos Corps (Base)',null ),
-(61,1,null,'Chronopolis',"Immortus/Kang's main city base in the future. From here, he rules all of his realms.")
+(61,1,null,'Chronopolis',"Immortus/Kang's main city base in the future. From here, he rules all of his realms."),
 (62,null,70,'Castle Limbo',null),
 (63,null,70,'Kang-Krossroads',null),
 (64,1,null,"Mephisto's Realm",'The realm of Mephisto is but one of many "death dimensions". Time moves much more slowly here, a few days on Earth feel like many years here.'),
@@ -128,12 +131,12 @@ INSERT INTO Base_Afiliacion(id_afiliacion,id_base,activo) VALUES
 (1,4,false),
 (1,5,null),
 (1,6,null),
-(1,7,null)
+(1,7,null),
 (3,8,null),
 (4,9,true),
 (4,12,false),
 (4,13,false),
-(4,14,false)
+(4,14,false),
 (5,9,false),
 (6,10,null),
 (7,11,false),
@@ -204,7 +207,7 @@ INSERT INTO Base_Afiliacion(id_afiliacion,id_base,activo) VALUES
 (36,71,false),
 (37,72,false),
 (37,73,false),
-(38,74,false),
+(38,74,false)
 ;
 
 

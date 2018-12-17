@@ -16,100 +16,60 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Afiliacion`
+--
+
+DROP TABLE IF EXISTS `Afiliacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `Afiliacion` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) NOT NULL,
+  `descripcion` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Afiliacion`
+--
+
+LOCK TABLES `Afiliacion` WRITE;
+/*!40000 ALTER TABLE `Afiliacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Afiliacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Afiliacion_Personaje`
 --
 
-- Table structure for table `Lugar`
---
-
-
-
-
-
-
-DROP TABLE IF EXISTS `Lugar`;
+DROP TABLE IF EXISTS `Afiliacion_Personaje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `Lugar` (
+CREATE TABLE `Afiliacion_Personaje` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_padre` int(10) unsigned DEFAULT NULL,
-  `nombre` varchar(256) NOT NULL,
-  `tipo` enum('universo','galaxia','planeta','mundo_mitologico','dimension_magica') DEFAULT NULL,
-  `tipo_geografico` enum('pais','estado','ciudad','locale') DEFAULT NULL,
-  `descripcion` text,
+  `id_competidor` int(10) unsigned DEFAULT NULL,
+  `id_personaje` int(10) unsigned DEFAULT NULL,
+  `id_base_afiliacion` int(10) unsigned NOT NULL,
+  `activo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_padre` (`id_padre`),
-  CONSTRAINT `Lugar_ibfk_1` FOREIGN KEY (`id_padre`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_personaje` (`id_personaje`),
+  KEY `id_competidor` (`id_competidor`),
+  KEY `id_base_afiliacion` (`id_base_afiliacion`),
+  CONSTRAINT `Afiliacion_Personaje_ibfk_1` FOREIGN KEY (`id_personaje`) REFERENCES `Personaje_NoCompetidor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Afiliacion_Personaje_ibfk_2` FOREIGN KEY (`id_competidor`) REFERENCES `Personaje_Competidor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Afiliacion_Personaje_ibfk_3` FOREIGN KEY (`id_base_afiliacion`) REFERENCES `Base_Afiliacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Lugar`
+-- Dumping data for table `Afiliacion_Personaje`
 --
 
-
-
-DROP TABLE IF EXISTS `Universo`;
-
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Universo` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(256) NOT NULL,
-  `descripcion` text NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-
-
-DROP TABLE IF EXISTS `Alifiacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Alifiacion` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(256) NOT NULL,
-  `descripcion` text NOT NULL,
-  `indificador_aumento` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Alifiacion`
---
-
-LOCK TABLES `Alifiacion` WRITE;
-/*!40000 ALTER TABLE `Alifiacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Alifiacion` ENABLE KEYS */;
+LOCK TABLES `Afiliacion_Personaje` WRITE;
+/*!40000 ALTER TABLE `Afiliacion_Personaje` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Afiliacion_Personaje` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-DROP TABLE IF EXISTS `Base_Operacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `Base_Operacion` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_lugar` int(10) unsigned NULL,
-  `id_universo` int(10) unsigned NULL,
-  `nombre` varchar(256) NOT NULL,
-  `descripcion` text NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_lugar`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Base_Operacion`
---
-
-LOCK TABLES `Base_Operacion` WRITE;
-/*!40000 ALTER TABLE `Base_Operacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Base_Operacion` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
 
 --
 -- Table structure for table `Alias`
@@ -142,8 +102,28 @@ UNLOCK TABLES;
 -- Table structure for table `Alifiacion`
 --
 
+DROP TABLE IF EXISTS `Alifiacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `Alifiacion` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) NOT NULL,
+  `descripcion` text NOT NULL,
+  `indificador_aumento` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `Alifiacion`
+--
 
+LOCK TABLES `Alifiacion` WRITE;
+/*!40000 ALTER TABLE `Alifiacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Alifiacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Base_Afiliacion`
 --
 
@@ -157,6 +137,7 @@ CREATE TABLE `Base_Afiliacion` (
   `activo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`,`id_base`,`id_afiliacion`),
   KEY `id_afiliacion` (`id_afiliacion`),
+  KEY `Base_Afiliacion_ibfk_1` (`id_base`),
   CONSTRAINT `Base_Afiliacion_ibfk_1` FOREIGN KEY (`id_base`) REFERENCES `Base_Operacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Base_Afiliacion_ibfk_2` FOREIGN KEY (`id_afiliacion`) REFERENCES `Alifiacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -171,31 +152,34 @@ LOCK TABLES `Base_Afiliacion` WRITE;
 /*!40000 ALTER TABLE `Base_Afiliacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `Base_Operacion`
+--
 
-
-DROP TABLE IF EXISTS `Afiliacion_Personaje`;
+DROP TABLE IF EXISTS `Base_Operacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `Afiliacion_Personaje` (
+CREATE TABLE `Base_Operacion` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_competidor` int(10) unsigned DEFAULT NULL,
-  `id_personaje` int(10) unsigned DEFAULT NULL,
-  `id_base_afiliacion` int(10) unsigned NOT NULL,
-  `activo` tinyint(1) DEFAULT NULL,
+  `id_lugar` int(10) unsigned DEFAULT NULL,
+  `id_universo` int(10) unsigned DEFAULT NULL,
+  `nombre` varchar(256) NOT NULL,
+  `descripcion` text,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_personaje`) REFERENCES `Personaje_NoCompetidor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_competidor`) REFERENCES `Personaje_Competidor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_base_afiliacion`) REFERENCES `Base_Afiliacion` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_lugar` (`id_lugar`),
+  KEY `id_universo` (`id_universo`),
+  CONSTRAINT `Base_Operacion_ibfk_1` FOREIGN KEY (`id_lugar`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Base_Operacion_ibfk_2` FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Afiliacion_Personaje`
+-- Dumping data for table `Base_Operacion`
 --
 
-LOCK TABLES `Afiliacion_Personaje` WRITE;
-/*!40000 ALTER TABLE `Afiliacion_Personaje` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Afiliacion_Personaje` ENABLE KEYS */;
+LOCK TABLES `Base_Operacion` WRITE;
+/*!40000 ALTER TABLE `Base_Operacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Base_Operacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -240,6 +224,11 @@ CREATE TABLE `Color` (
 --
 -- Dumping data for table `Color`
 --
+
+LOCK TABLES `Color` WRITE;
+/*!40000 ALTER TABLE `Color` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Color` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Enfrentamiento`
@@ -375,13 +364,34 @@ LOCK TABLES `Inscrito` WRITE;
 /*!40000 ALTER TABLE `Inscrito` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
+--
+-- Table structure for table `Lugar`
 --
 
--
+DROP TABLE IF EXISTS `Lugar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `Lugar` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_padre` int(10) unsigned DEFAULT NULL,
+  `nombre` varchar(256) NOT NULL,
+  `tipo` enum('universo','galaxia','planeta','mundo_mitologico','dimension_magica') DEFAULT NULL,
+  `tipo_geografico` enum('pais','estado','ciudad','locale') DEFAULT NULL,
+  `descripcion` text,
+  PRIMARY KEY (`id`),
+  KEY `id_padre` (`id_padre`),
+  CONSTRAINT `Lugar_ibfk_1` FOREIGN KEY (`id_padre`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `Lugar`
+--
 
+LOCK TABLES `Lugar` WRITE;
+/*!40000 ALTER TABLE `Lugar` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Lugar` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Parafernalia`
@@ -578,6 +588,10 @@ CREATE TABLE `Profesion` (
 -- Dumping data for table `Profesion`
 --
 
+LOCK TABLES `Profesion` WRITE;
+/*!40000 ALTER TABLE `Profesion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Profesion` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `Profesion_Competidor`
@@ -641,6 +655,30 @@ LOCK TABLES `Relacion` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Universo`
+--
+
+DROP TABLE IF EXISTS `Universo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `Universo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) NOT NULL,
+  `descripcion` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Universo`
+--
+
+LOCK TABLES `Universo` WRITE;
+/*!40000 ALTER TABLE `Universo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Universo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `np`
 --
 
@@ -674,4 +712,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-15 13:24:26
+-- Dump completed on 2018-12-17 17:06:42

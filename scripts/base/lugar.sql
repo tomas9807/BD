@@ -1,4 +1,4 @@
-TRUNCATE Universo; TRUNCATE Lugar;
+
 INSERT INTO Universo (id,nombre,descripcion) VALUES 
 (1,'Tierra 616','es el universo original de Marvel donde se originan la mayoría de las historias y personajes, de hecho este es el espacio de las series clásicas como X- Men, The Amazing Spider-Man y Fantastic Four'),
 (2,'House of M','es un universo que deriva de Tiera 616 donde los mutantes son quienes predominan. Debido a la acción de la Bruja Escarlata ningun ser humano recuerda como solía ser su mundo, excepto los agentes de SHIELD y Wolverine.'),
@@ -77,7 +77,7 @@ INSERT INTO Lugar (id,id_padre,nombre,tipo,tipo_geografico,descripcion) VALUES
 (66,62,'Long Island',NULL,'locale',NULL),
 (67,62,'ChinaTown',NULL,'locale',NULL),
 (68,65,'Central Park',NULL,'locale',NULL),
-(69,1,'Asgard','mundo_mitologico',NULL,NULL),
+(69,null,'Asgard','mundo_mitologico',NULL,NULL),
 (70,null,'Limbo','dimension_magica',NULL,NULL),
 (71,55,'San Francisco Bay',NULL,'locale',NULL),
 (72,55,'San Francisco',NULL,'ciudad',NULL),
@@ -107,7 +107,7 @@ INSERT INTO Lugar (id,id_padre,nombre,tipo,tipo_geografico,descripcion) VALUES
 (96,62,'Queens',NULL,'locale',NULL),
 (97,22,'New Jersey',NULL,'estado',NULL),
 (98,22,'Tibet',NULL,'estado',NULL),
-(99,98,"K'un-Lun",'ciudad',"K'un-Lun (焜伦) is a mystical lost city located in a pocket dimension, and one of the Seven Capital Cities of Heaven."),
+(99,98,"K'un-Lun",NULL,'ciudad',"K'un-Lun (焜伦) is a mystical lost city located in a pocket dimension, and one of the Seven Capital Cities of Heaven."),
 (100,53,'Hegeman',NULL,'ciudad',NULL),
 (101,23,'Yukon',NULL,'locale',NULL),
 (102,null,'Battleworld','planeta',NULL,NULL),
@@ -118,7 +118,7 @@ INSERT INTO Lugar (id,id_padre,nombre,tipo,tipo_geografico,descripcion) VALUES
 (107,106,'Bagalia City',NULL,'ciudad',NULL),
 (108,14,'Symkaria',NULL,'pais',NULL),
 (109,22,'Idaho',NULL,'estado',NULL),
-(110,109,'Burton Canyon','locale',NULL),
+(110,109,'Burton Canyon',NULL,'locale',NULL),
 (111,11,'Asgardia','mundo_mitologico',NULL,NULL),
 (112,22,'Oklahoma',NULL,'estado',NULL)
 ;
