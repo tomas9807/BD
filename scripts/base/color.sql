@@ -1,4 +1,4 @@
-INSERT INTO color VALUES
+INSERT INTO Color VALUES
 (3,'Amarillo'),
 (10,'Anaranjado'),
 (1,'Azul'),
