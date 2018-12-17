@@ -135,12 +135,15 @@ DROP TABLE IF EXISTS `Base_Operacion`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Base_Operacion` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_lugar` int(10) unsigned NOT NULL,
+  `id_lugar` int(10) unsigned NULL,
+  `id_universo` int(10) unsigned NULL,
   `nombre` varchar(256) NOT NULL,
-  `descripcion` text,
+  `descripcion` text NULL,
   PRIMARY KEY (`id`),
   KEY `id_lugar` (`id_lugar`),
   CONSTRAINT `Base_Operacion_ibfk_1` FOREIGN KEY (`id_lugar`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_universo` (`id_universo`),
+  CONSTRAINT `Base_Operacion_ibfk_2` FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -330,9 +333,27 @@ LOCK TABLES `Inscrito` WRITE;
 /*!40000 ALTER TABLE `Inscrito` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+DROP TABLE IF EXISTS `Universo`;
+
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `Universo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(256) NOT NULL,
+  `descripcion` text NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
+
 -- Table structure for table `Lugar`
 --
+
+
+
+
+
 
 DROP TABLE IF EXISTS `Lugar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -342,7 +363,7 @@ CREATE TABLE `Lugar` (
   `id_padre` int(10) unsigned DEFAULT NULL,
   `nombre` varchar(256) NOT NULL,
   `tipo` enum('universo','galaxia','planeta','mundo_mitologico','dimension_magica') DEFAULT NULL,
-  `tipo_geografico` enum('pais','estado','ciudad','localizacion') DEFAULT NULL,
+  `tipo_geografico` enum('pais','estado','ciudad','locale') DEFAULT NULL,
   `descripcion` text,
   PRIMARY KEY (`id`),
   KEY `id_padre` (`id_padre`),
