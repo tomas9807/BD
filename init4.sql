@@ -385,7 +385,7 @@ CREATE TABLE `Lugar` (
   PRIMARY KEY (`id`),
   KEY `id_padre` (`id_padre`),
   CONSTRAINT `Lugar_ibfk_1` FOREIGN KEY (`id_padre`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,6 +394,7 @@ CREATE TABLE `Lugar` (
 
 LOCK TABLES `Lugar` WRITE;
 /*!40000 ALTER TABLE `Lugar` DISABLE KEYS */;
+INSERT INTO `Lugar` VALUES (10,NULL,'Andromeda Galaxy','galaxia',NULL,'The Andromeda Galaxy is home to a great number of alien species, foremost among them the Skrulls who were the dominant force of their galaxy.'),(11,NULL,'Milky Way','galaxia',NULL,'the Milky Way galaxy is home to numerous locations including the Sol system (Earth\'s solar system), and the star system Krona.'),(12,NULL,'Black Galaxy','galaxia',NULL,'The Black Galaxy is a living \"bio-verse\" and Ego the living planet was born there. '),(13,NULL,'Large Magellanic Cloud','galaxia',NULL,'The Large Magellanic Cloud is a dwarf galaxy that orbits the Milky Way. Also known as the Greater Magellanic Cloud, it is the home galaxy of the Kree Empire, as well as the Vorms.'),(14,11,'Tierra','planeta',NULL,NULL),(15,11,'Venus','planeta',NULL,NULL),(16,11,'Marte','planeta',NULL,NULL),(17,11,'Jupiter','planeta',NULL,NULL),(18,11,'Mercurio','planeta',NULL,NULL),(19,11,'Saturno','planeta',NULL,NULL),(20,11,'Urano','planeta',NULL,NULL),(21,11,'Neptuno','planeta',NULL,NULL),(22,14,'Estados Unidos',NULL,'pais',NULL),(23,14,'Canada',NULL,'pais',NULL),(24,14,'Gran Bretana',NULL,'pais',NULL),(25,14,'Wakanda',NULL,'pais',NULL),(26,14,'Alemania',NULL,'pais',NULL),(27,14,'Francia',NULL,'pais',NULL),(28,14,'Belgica',NULL,'pais',NULL),(29,14,'Bulgaria',NULL,'pais',NULL),(30,14,'Finlandia',NULL,'pais',NULL),(31,14,'Italia',NULL,'pais',NULL),(32,14,'Grecia',NULL,'pais',NULL),(33,14,'Rusia',NULL,'pais',NULL),(34,14,'Espana',NULL,'pais',NULL),(35,14,'Iran',NULL,'pais',NULL),(36,14,'Iraq',NULL,'pais',NULL),(37,14,'Egipto',NULL,'pais',NULL),(38,14,'India',NULL,'pais',NULL),(39,14,'China',NULL,'pais',NULL),(40,14,'Japon',NULL,'pais',NULL),(41,14,'Argentina',NULL,'pais',NULL),(42,14,'Colombia',NULL,'pais',NULL),(43,14,'Venezuela',NULL,'pais',NULL),(44,14,'Mexico',NULL,'pais',NULL),(45,14,'Tailandia',NULL,'pais',NULL),(46,14,'Sur Corea',NULL,'pais',NULL),(47,14,'Nor Corea',NULL,'pais',NULL),(48,14,'Brasil',NULL,'pais',NULL),(49,14,'Umbazi',NULL,'pais',NULL),(50,14,'Niganda',NULL,'pais',NULL),(51,14,'Djanda',NULL,'pais',NULL),(52,14,'Australia',NULL,'pais',NULL),(53,22,'Nueva York',NULL,'estado',NULL),(54,22,'Virginia',NULL,'estado',NULL),(55,22,'California',NULL,'estado',NULL),(56,22,'Bruselas',NULL,'estado',NULL),(57,22,'Madrid',NULL,'estado',NULL),(58,22,'Londres',NULL,'estado',NULL),(59,22,'Berlin',NULL,'estado',NULL),(60,22,'Beijing',NULL,'estado',NULL),(61,22,'Shangai',NULL,'estado',NULL),(62,53,'Nueva York City',NULL,'ciudad',NULL),(63,57,'Madrid',NULL,'ciudad',NULL),(64,58,'Ciudad de Londres',NULL,'ciudad',NULL),(65,62,'Manhattan',NULL,'locale',NULL),(66,62,'Long Island',NULL,'locale',NULL),(67,62,'ChinaTown',NULL,'locale',NULL),(68,65,'Central Park',NULL,'locale',NULL),(69,NULL,'Asgard','mundo_mitologico',NULL,NULL),(70,NULL,'Limbo','dimension_magica',NULL,NULL),(71,55,'San Francisco Bay',NULL,'locale',NULL),(72,55,'San Francisco',NULL,'ciudad',NULL),(73,71,'Marin Highlands',NULL,'locale',NULL),(74,52,'Northern Territory',NULL,'locale',NULL),(75,14,'Oceano Atlantico',NULL,'locale',NULL),(76,74,'Triangulo de las Bermudas',NULL,'locale',NULL),(77,65,'Greenwich Village',NULL,'locale',NULL),(78,65,'Harlem',NULL,'locale',NULL),(79,22,'Colorado',NULL,'estado',NULL),(80,62,'Brooklyn',NULL,'locale',NULL),(81,14,'Circulo Artico',NULL,'locale',NULL),(82,81,'Polo Norte',NULL,'locale',NULL),(83,53,'Bronx',NULL,'locale',NULL),(84,11,'Blue Area of the Moon','planeta',NULL,NULL),(85,84,'Negative Zone',NULL,'locale',NULL),(86,79,'Mount Charteris',NULL,'locale',NULL),(87,65,'Times Square',NULL,'locale',NULL),(88,22,'Massachusetts',NULL,'estado',NULL),(89,88,'Boston',NULL,'ciudad',NULL),(90,65,'Yancy Street',NULL,'locale',NULL),(91,22,'Connecticut',NULL,'estado',NULL),(92,91,'Stamford',NULL,'ciudad',NULL),(93,14,'La órbita de la Tierra',NULL,'locale','An area of space around the Earth. Anything within it that cannot resist the gravitational pull of the Earth will rotate around the Earth inside it. '),(94,14,'Antarctica',NULL,'locale',NULL),(95,25,'Necropolis',NULL,'ciudad',NULL),(96,62,'Queens',NULL,'locale',NULL),(97,22,'New Jersey',NULL,'estado',NULL),(98,22,'Tibet',NULL,'estado',NULL),(99,98,'K\'un-Lun',NULL,'ciudad','K\'un-Lun (焜伦) is a mystical lost city located in a pocket dimension, and one of the Seven Capital Cities of Heaven.'),(100,53,'Hegeman',NULL,'ciudad',NULL),(101,23,'Yukon',NULL,'locale',NULL),(102,NULL,'Battleworld','planeta',NULL,NULL),(103,102,'Arachnia',NULL,'locale',NULL),(104,103,'Chinatown',NULL,'locale',NULL),(105,62,'Downtown',NULL,'locale',NULL),(106,14,'Bagalia',NULL,'pais',NULL),(107,106,'Bagalia City',NULL,'ciudad',NULL),(108,14,'Symkaria',NULL,'pais',NULL),(109,22,'Idaho',NULL,'estado',NULL),(110,109,'Burton Canyon',NULL,'locale',NULL),(111,11,'Asgardia','mundo_mitologico',NULL,NULL),(112,22,'Oklahoma',NULL,'estado',NULL),(113,55,'Central City',NULL,'ciudad',NULL);
 /*!40000 ALTER TABLE `Lugar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,26 +460,30 @@ CREATE TABLE `Personaje_Competidor` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre_original` varchar(256) NOT NULL,
   `nombre_real` varchar(256) NOT NULL,
-  `apellido_real` varchar(256)  NULL,
+  `apellido_real` varchar(256) DEFAULT NULL,
   `biografia` text,
   `identidad` enum('publica','anonima') DEFAULT NULL,
   `moralidad` enum('heroe','villano','antiheroe') DEFAULT NULL,
-  `altura`  float(10,2) DEFAULT NULL,
-  `altura_opcional`  float(10,2) DEFAULT NULL,
-  `peso` int(10) DEFAULT  NULL,
-  `peso_opcional`  int(10) DEFAULT NULL,
+  `altura` float(10,2) DEFAULT NULL,
+  `altura_opcional` float(10,2) DEFAULT NULL,
+  `peso` int(10) DEFAULT NULL,
+  `peso_opcional` int(10) DEFAULT NULL,
   `estado_civil` enum('soltero','casado') DEFAULT NULL,
   `genero` enum('M','F','Otro') DEFAULT NULL,
   `color_ojos_id` int(10) unsigned NOT NULL,
   `color_pelo_id` int(10) unsigned NOT NULL,
-  `id_universo` int(10) unsigned NULL,
-  `id_lugar_nacimiento` int(10) unsigned NULL,
+  `id_universo` int(10) unsigned DEFAULT NULL,
+  `id_lugar_nacimiento` int(10) unsigned DEFAULT NULL,
   `foto_path` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`color_ojos_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`color_pelo_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_universo` (`id_universo`),
+  KEY `color_ojos_id` (`color_ojos_id`),
+  KEY `color_pelo_id` (`color_pelo_id`),
+  KEY `id_lugar_nacimiento` (`id_lugar_nacimiento`),
+  CONSTRAINT `Personaje_Competidor_ibfk_1` FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_Competidor_ibfk_2` FOREIGN KEY (`color_ojos_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_Competidor_ibfk_3` FOREIGN KEY (`color_pelo_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_Competidor_ibfk_4` FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -502,14 +507,16 @@ CREATE TABLE `Personaje_NoCompetidor` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre_real` varchar(256) NOT NULL,
   `apellido_real` varchar(256) NOT NULL,
-  `nombre_original` varchar(256) NULL,
+  `nombre_original` varchar(256) DEFAULT NULL,
   `fallecido` tinyint(4) DEFAULT NULL,
   `genero` enum('M','F','Otro') DEFAULT NULL,
-  `id_universo` int(10) unsigned NULL,
-  `id_lugar_nacimiento` int(10) unsigned NULL,
+  `id_universo` int(10) unsigned DEFAULT NULL,
+  `id_lugar_nacimiento` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_universo` (`id_universo`),
+  KEY `id_lugar_nacimiento` (`id_lugar_nacimiento`),
+  CONSTRAINT `Personaje_NoCompetidor_ibfk_1` FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_NoCompetidor_ibfk_2` FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -718,4 +725,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-17 17:28:53
+-- Dump completed on 2018-12-17 18:48:03

@@ -385,7 +385,7 @@ CREATE TABLE `Lugar` (
   PRIMARY KEY (`id`),
   KEY `id_padre` (`id_padre`),
   CONSTRAINT `Lugar_ibfk_1` FOREIGN KEY (`id_padre`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,6 +394,7 @@ CREATE TABLE `Lugar` (
 
 LOCK TABLES `Lugar` WRITE;
 /*!40000 ALTER TABLE `Lugar` DISABLE KEYS */;
+INSERT INTO `Lugar` VALUES (10,NULL,'Andromeda Galaxy','galaxia',NULL,'The Andromeda Galaxy is home to a great number of alien species, foremost among them the Skrulls who were the dominant force of their galaxy.'),(11,NULL,'Milky Way','galaxia',NULL,'the Milky Way galaxy is home to numerous locations including the Sol system (Earth\'s solar system), and the star system Krona.'),(12,NULL,'Black Galaxy','galaxia',NULL,'The Black Galaxy is a living \"bio-verse\" and Ego the living planet was born there. '),(13,NULL,'Large Magellanic Cloud','galaxia',NULL,'The Large Magellanic Cloud is a dwarf galaxy that orbits the Milky Way. Also known as the Greater Magellanic Cloud, it is the home galaxy of the Kree Empire, as well as the Vorms.'),(14,11,'Tierra','planeta',NULL,NULL),(15,11,'Venus','planeta',NULL,NULL),(16,11,'Marte','planeta',NULL,NULL),(17,11,'Jupiter','planeta',NULL,NULL),(18,11,'Mercurio','planeta',NULL,NULL),(19,11,'Saturno','planeta',NULL,NULL),(20,11,'Urano','planeta',NULL,NULL),(21,11,'Neptuno','planeta',NULL,NULL),(22,14,'Estados Unidos',NULL,'pais',NULL),(23,14,'Canada',NULL,'pais',NULL),(24,14,'Gran Bretana',NULL,'pais',NULL),(25,14,'Wakanda',NULL,'pais',NULL),(26,14,'Alemania',NULL,'pais',NULL),(27,14,'Francia',NULL,'pais',NULL),(28,14,'Belgica',NULL,'pais',NULL),(29,14,'Bulgaria',NULL,'pais',NULL),(30,14,'Finlandia',NULL,'pais',NULL),(31,14,'Italia',NULL,'pais',NULL),(32,14,'Grecia',NULL,'pais',NULL),(33,14,'Rusia',NULL,'pais',NULL),(34,14,'Espana',NULL,'pais',NULL),(35,14,'Iran',NULL,'pais',NULL),(36,14,'Iraq',NULL,'pais',NULL),(37,14,'Egipto',NULL,'pais',NULL),(38,14,'India',NULL,'pais',NULL),(39,14,'China',NULL,'pais',NULL),(40,14,'Japon',NULL,'pais',NULL),(41,14,'Argentina',NULL,'pais',NULL),(42,14,'Colombia',NULL,'pais',NULL),(43,14,'Venezuela',NULL,'pais',NULL),(44,14,'Mexico',NULL,'pais',NULL),(45,14,'Tailandia',NULL,'pais',NULL),(46,14,'Sur Corea',NULL,'pais',NULL),(47,14,'Nor Corea',NULL,'pais',NULL),(48,14,'Brasil',NULL,'pais',NULL),(49,14,'Umbazi',NULL,'pais',NULL),(50,14,'Niganda',NULL,'pais',NULL),(51,14,'Djanda',NULL,'pais',NULL),(52,14,'Australia',NULL,'pais',NULL),(53,22,'Nueva York',NULL,'estado',NULL),(54,22,'Virginia',NULL,'estado',NULL),(55,22,'California',NULL,'estado',NULL),(56,22,'Bruselas',NULL,'estado',NULL),(57,22,'Madrid',NULL,'estado',NULL),(58,22,'Londres',NULL,'estado',NULL),(59,22,'Berlin',NULL,'estado',NULL),(60,22,'Beijing',NULL,'estado',NULL),(61,22,'Shangai',NULL,'estado',NULL),(62,53,'Nueva York City',NULL,'ciudad',NULL),(63,57,'Madrid',NULL,'ciudad',NULL),(64,58,'Ciudad de Londres',NULL,'ciudad',NULL),(65,62,'Manhattan',NULL,'locale',NULL),(66,62,'Long Island',NULL,'locale',NULL),(67,62,'ChinaTown',NULL,'locale',NULL),(68,65,'Central Park',NULL,'locale',NULL),(69,NULL,'Asgard','mundo_mitologico',NULL,NULL),(70,NULL,'Limbo','dimension_magica',NULL,NULL),(71,55,'San Francisco Bay',NULL,'locale',NULL),(72,55,'San Francisco',NULL,'ciudad',NULL),(73,71,'Marin Highlands',NULL,'locale',NULL),(74,52,'Northern Territory',NULL,'locale',NULL),(75,14,'Oceano Atlantico',NULL,'locale',NULL),(76,74,'Triangulo de las Bermudas',NULL,'locale',NULL),(77,65,'Greenwich Village',NULL,'locale',NULL),(78,65,'Harlem',NULL,'locale',NULL),(79,22,'Colorado',NULL,'estado',NULL),(80,62,'Brooklyn',NULL,'locale',NULL),(81,14,'Circulo Artico',NULL,'locale',NULL),(82,81,'Polo Norte',NULL,'locale',NULL),(83,53,'Bronx',NULL,'locale',NULL),(84,11,'Blue Area of the Moon','planeta',NULL,NULL),(85,84,'Negative Zone',NULL,'locale',NULL),(86,79,'Mount Charteris',NULL,'locale',NULL),(87,65,'Times Square',NULL,'locale',NULL),(88,22,'Massachusetts',NULL,'estado',NULL),(89,88,'Boston',NULL,'ciudad',NULL),(90,65,'Yancy Street',NULL,'locale',NULL),(91,22,'Connecticut',NULL,'estado',NULL),(92,91,'Stamford',NULL,'ciudad',NULL),(93,14,'La órbita de la Tierra',NULL,'locale','An area of space around the Earth. Anything within it that cannot resist the gravitational pull of the Earth will rotate around the Earth inside it. '),(94,14,'Antarctica',NULL,'locale',NULL),(95,25,'Necropolis',NULL,'ciudad',NULL),(96,62,'Queens',NULL,'locale',NULL),(97,22,'New Jersey',NULL,'estado',NULL),(98,22,'Tibet',NULL,'estado',NULL),(99,98,'K\'un-Lun',NULL,'ciudad','K\'un-Lun (焜伦) is a mystical lost city located in a pocket dimension, and one of the Seven Capital Cities of Heaven.'),(100,53,'Hegeman',NULL,'ciudad',NULL),(101,23,'Yukon',NULL,'locale',NULL),(102,NULL,'Battleworld','planeta',NULL,NULL),(103,102,'Arachnia',NULL,'locale',NULL),(104,103,'Chinatown',NULL,'locale',NULL),(105,62,'Downtown',NULL,'locale',NULL),(106,14,'Bagalia',NULL,'pais',NULL),(107,106,'Bagalia City',NULL,'ciudad',NULL),(108,14,'Symkaria',NULL,'pais',NULL),(109,22,'Idaho',NULL,'estado',NULL),(110,109,'Burton Canyon',NULL,'locale',NULL),(111,11,'Asgardia','mundo_mitologico',NULL,NULL),(112,22,'Oklahoma',NULL,'estado',NULL),(113,55,'Central City',NULL,'ciudad',NULL);
 /*!40000 ALTER TABLE `Lugar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,27 +460,31 @@ CREATE TABLE `Personaje_Competidor` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre_original` varchar(256) NOT NULL,
   `nombre_real` varchar(256) NOT NULL,
-  `apellido_real` varchar(256)  NULL,
+  `apellido_real` varchar(256) DEFAULT NULL,
   `biografia` text,
   `identidad` enum('publica','anonima') DEFAULT NULL,
   `moralidad` enum('heroe','villano','antiheroe') DEFAULT NULL,
-  `altura`  float(10,2) DEFAULT NULL,
-  `altura_opcional`  float(10,2) DEFAULT NULL,
-  `peso` int(10) DEFAULT  NULL,
-  `peso_opcional`  int(10) DEFAULT NULL,
+  `altura` float(10,2) DEFAULT NULL,
+  `altura_opcional` float(10,2) DEFAULT NULL,
+  `peso` int(10) DEFAULT NULL,
+  `peso_opcional` int(10) DEFAULT NULL,
   `estado_civil` enum('soltero','casado') DEFAULT NULL,
   `genero` enum('M','F','Otro') DEFAULT NULL,
-  `color_ojos_id` int(10) unsigned NOT NULL,
-  `color_pelo_id` int(10) unsigned NOT NULL,
-  `id_universo` int(10) unsigned NULL,
-  `id_lugar_nacimiento` int(10) unsigned NULL,
+  `color_ojos_id` int(10) unsigned DEFAULT NULL,
+  `color_pelo_id` int(10) unsigned DEFAULT NULL,
+  `id_universo` int(10) unsigned DEFAULT NULL,
+  `id_lugar_nacimiento` int(10) unsigned DEFAULT NULL,
   `foto_path` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`color_ojos_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`color_pelo_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `id_universo` (`id_universo`),
+  KEY `color_ojos_id` (`color_ojos_id`),
+  KEY `color_pelo_id` (`color_pelo_id`),
+  KEY `id_lugar_nacimiento` (`id_lugar_nacimiento`),
+  CONSTRAINT `Personaje_Competidor_ibfk_1` FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_Competidor_ibfk_2` FOREIGN KEY (`color_ojos_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_Competidor_ibfk_3` FOREIGN KEY (`color_pelo_id`) REFERENCES `Color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_Competidor_ibfk_4` FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -488,6 +493,7 @@ CREATE TABLE `Personaje_Competidor` (
 
 LOCK TABLES `Personaje_Competidor` WRITE;
 /*!40000 ALTER TABLE `Personaje_Competidor` DISABLE KEYS */;
+INSERT INTO `Personaje_Competidor` VALUES (1,'Iron Fist','Daniel','Rand','is a fictional superhero appearing in American comic books published by Marvel Comics. Created by Roy Thomas and Gil Kane, Iron Fist first appeared in Marvel Premiere #15 (May 1974). The character is a practitioner of martial arts and the wielder of a mystical force known as the Iron Fist, which allows him to summon and focus his chi. He starred in his own solo series in the 1970s, and shared the title Power Man and Iron Fist for several years with Luke Cage, partnering with Cage to form the superhero team Heroes for Hire. The character has starred in numerous solo titles since, including The Immortal Iron Fist, which expanded on his origin story and the history of the Iron Fist.','anonima','heroe',1.80,NULL,79,NULL,'soltero','M',1,3,1,NULL,NULL),(2,'The Spider-Man','Peter','Parker','Peter Parker was raised by his paternal aunt and uncle, May and Ben Parker, during the Great Depression. Peter was raised with the belief of good triumphing over evil and was supportive of his aunt and uncle\'s activism.\nPeter tragically discovered the mutilated body of his uncle Ben, killed in retaliation by one of New York City\'s businessmen for organizing a strike on sweatshops. The murder of his uncle by the Goblin drove Peter\'s resolve to continue to seek justice. While helping May at a rally in a Hooverville, they encountered a violent response from the Enforcers. Fortunately, the two were saved by Ben Urich. Subsequently, Peter became Urich\'s protege for the Daily Bugle and explored the dire situation of New York City\'s denizens, especially those under the threat of the Goblin. After Peter mistakenly received a tip-off meant for Urich, he ventured to a warehouse where the Goblin’s men were unloading a shipment of stolen antiques.','anonima','heroe',1.80,NULL,79,NULL,'soltero','M',7,7,6,96,NULL),(3,'Mister Fantastic','Reed','Richards','Reed Richards was born in Central City, California the only son of wealthy physicist Nathaniel Richards and his wife Evelyn, was a child prodigy with special aptitude in mathematics, physics, and mechanics. Evelyn died when Reed was seven','publica','heroe',1.90,NULL,82,NULL,'soltero','M',7,7,1,113,NULL),(4,'Ultron','Ultron',NULL,'Ultron-1 was constructed by Dr. Hank Pym of the Avengers as the famed scientist/adventurer was experimenting in high-intelligence robotics. Ultron became sentient and rebelled, hypnotizing Pym and brainwashing him into forgetting that Ultron had ever existed. He immediately began improving upon his rudimentary design, quickly upgrading himself several times from Ultron-2, Ultron-3 and Ultron-4, until finally becoming Ultron-5.','publica','villano',1.90,NULL,243,NULL,'soltero','M',5,NULL,1,97,NULL),(5,'Kang the Conqueror','Nathaniel','Richards','Nathaniel Richards was born in the 30th century of Earth-6311, a reality where humanity never went into the dark ages. After centuries of advancement and warfare, peace was brought to the land by a time-traveller from Earth-616 named Nathaniel Richards. Because Richards brought peace to this war-torn future, he was known as the legendary benefactor.[10] The Nathaniel Richards born to this reality is said to be a descendant of the Benefactor through Reed Richards, although other records also indicate that he may also be a descendant of the Latverian monarch known as Dr. Doom.[11] At the age of 16, intervention from his future self, as Kang the Conqueror, resulted in young Nathaniel to try and prevent his eventual transformation in Kang, briefly becoming the young hero known as Iron Lad.','anonima','villano',1.90,NULL,104,NULL,'soltero','M',7,7,16,NULL,NULL),(6,'Hela','Hela',NULL,'Hela was allegedly daughter of the Asgardian god of mischief, Loki[11] and of the sorceress giantess Angerboda.The three Asgardian goddesses of fate, the Norns, are said to have warned the Asgardian gods that Hela would prove to be a great danger to them. Odin, ruler of Asgard, decreed that Hela would become goddess and ruler of the spirits of the dead on the day of her maturity.','publica','villano',2.10,NULL,227,NULL,'casado','F',4,8,1,NULL,NULL);
 /*!40000 ALTER TABLE `Personaje_Competidor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,15 +508,17 @@ CREATE TABLE `Personaje_NoCompetidor` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre_real` varchar(256) NOT NULL,
   `apellido_real` varchar(256) NOT NULL,
-  `nombre_original` varchar(256) NULL,
+  `nombre_original` varchar(256) DEFAULT NULL,
   `fallecido` tinyint(4) DEFAULT NULL,
   `genero` enum('M','F','Otro') DEFAULT NULL,
-  `id_universo` int(10) unsigned NULL,
-  `id_lugar_nacimiento` int(10) unsigned NULL,
+  `id_universo` int(10) unsigned DEFAULT NULL,
+  `id_lugar_nacimiento` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `id_universo` (`id_universo`),
+  KEY `id_lugar_nacimiento` (`id_lugar_nacimiento`),
+  CONSTRAINT `Personaje_NoCompetidor_ibfk_1` FOREIGN KEY (`id_universo`) REFERENCES `Universo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Personaje_NoCompetidor_ibfk_2` FOREIGN KEY (`id_lugar_nacimiento`) REFERENCES `Lugar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -519,6 +527,7 @@ CREATE TABLE `Personaje_NoCompetidor` (
 
 LOCK TABLES `Personaje_NoCompetidor` WRITE;
 /*!40000 ALTER TABLE `Personaje_NoCompetidor` DISABLE KEYS */;
+INSERT INTO `Personaje_NoCompetidor` VALUES (1,'John','Richards','Major John Richards',NULL,'M',1,22),(2,'Ted','Richards',NULL,1,'M',1,22),(3,'Nathaniel',' Richards','The Warlord',0,'M',1,22),(4,'Evelyn',' Richards',NULL,0,'F',1,22),(5,'May',' Parker',NULL,NULL,'F',6,22),(6,'Benjamin',' Parker',NULL,1,'M',6,22),(7,'Nu','An','Yu-Ti',1,'M',1,99);
 /*!40000 ALTER TABLE `Personaje_NoCompetidor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -671,7 +680,7 @@ CREATE TABLE `Universo` (
   `nombre` varchar(256) NOT NULL,
   `descripcion` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -680,7 +689,7 @@ CREATE TABLE `Universo` (
 
 LOCK TABLES `Universo` WRITE;
 /*!40000 ALTER TABLE `Universo` DISABLE KEYS */;
-INSERT INTO `Universo` VALUES (1,'Tierra 616','es el universo original de Marvel donde se originan la mayoría de las historias y personajes, de hecho este es el espacio de las series clásicas como X- Men, The Amazing Spider-Man y Fantastic Four'),(2,'House of M','es un universo que deriva de Tiera 616 donde los mutantes son quienes predominan. Debido a la acción de la Bruja Escarlata ningun ser humano recuerda como solía ser su mundo, excepto los agentes de SHIELD y Wolverine.'),(3,'Ultimate','se puede decir que es el universo donde todo vuelve a comenzar. En este universo los superhéroes presentan características diferentes a las del original, por ejemplo, el Ultimate Spider-Man es Miles Morales que es una persona afroamericana con ascendencia latina.'),(4,'Age of Apocalypse','es producto de un accidente temporal cuando Legion, hijo del profesor X, viaja al pasado para asesinar a Magneto, pero por un error mata a su propio padre, lo que provoca el ascenso de Apocalipsis como señor de la Tierra. En este Universo, también conocido como Tierra 295, los humanos se revelan junto a Reed Richards y Tony Stark.'),(5,'Marvel 2099','es el universo del futuro en este lugar las grandes corporaciones controlan un mundo dividido por una guerra entre humanos y mutantes, aquí surgen historias como Spider- Man 2099, X-Men 2099 y Fantastic Four 2099 entre otros.'),(6,'Marvel Noir','por alguna razón, la mayoría de los personajes no tienen poderes, a excepción de Spider-Man.'),(7,'Marvel Zombies','es el mundo de los muertos vivientes, en éste mundo los superhéroes y villanos son infectados por un virus alienígena que los convierte en zombies.'),(8,'Ucronías','es el universo donde los escritores se preguntaron “que hubiese pasado si...”. En esta línea temporal hay cosas que nunca sucedieron o sucedieron de forma diferente, por ejemplo Bruce Banner es mordido por una araña radioactiva que lo convierte en Spider-Man mientras que Peter Parker se inyecta la fórmula que lo convierte en Hulk.'),(9,'Larval Universe','también conocido como Tierra 8311, es el universo donde los personajes conocidos se presentan como una versión animal: Spider-Ham, Fantastic Fur y el Capitán Americat, entre otros.'),(10,'Tierra-001','La Tierra-001 es la realidad natal de Los Herederos y alberga los trofeos de mil mundos conquistados.'),(11,'Tierra-15513','La Tierra-15513 es una realidad dentro de la cual el Dios Emperador de Doom formó su Battleworld.'),(12,'Tierra-3145','Tierra-3145 es el hogar de Ben Parker, quien se convirtió en el hombre araña en esta realidad. Sin embargo, se retiró de Spider-Man después de que su esposa y su sobrino fueron asesinados por la Elf Esmeralda.'),(13,'Tierra-13','La Tierra-13 es una realidad alternativa del Universo 616. En este mundo Peter Parker fue elegido por la Fuerza Enigma y retuvo los poderes del Capitán Universo.'),(14,'Tierra-TRN588','Earth-TRN588 is a divergent reality similar to Earth-928, a reality where a second Age of Heroes began in the future of 2099 A.D. '),(15,'Multiverso','The Multiverse is the collection of alternate universes which share a universal hierarchy; it is a subsection of the larger Omniverse, the collection of all alternate universes. ');
+INSERT INTO `Universo` VALUES (1,'Tierra 616','es el universo original de Marvel donde se originan la mayoría de las historias y personajes, de hecho este es el espacio de las series clásicas como X- Men, The Amazing Spider-Man y Fantastic Four'),(2,'House of M','es un universo que deriva de Tiera 616 donde los mutantes son quienes predominan. Debido a la acción de la Bruja Escarlata ningun ser humano recuerda como solía ser su mundo, excepto los agentes de SHIELD y Wolverine.'),(3,'Ultimate','se puede decir que es el universo donde todo vuelve a comenzar. En este universo los superhéroes presentan características diferentes a las del original, por ejemplo, el Ultimate Spider-Man es Miles Morales que es una persona afroamericana con ascendencia latina.'),(4,'Age of Apocalypse','es producto de un accidente temporal cuando Legion, hijo del profesor X, viaja al pasado para asesinar a Magneto, pero por un error mata a su propio padre, lo que provoca el ascenso de Apocalipsis como señor de la Tierra. En este Universo, también conocido como Tierra 295, los humanos se revelan junto a Reed Richards y Tony Stark.'),(5,'Marvel 2099','es el universo del futuro en este lugar las grandes corporaciones controlan un mundo dividido por una guerra entre humanos y mutantes, aquí surgen historias como Spider- Man 2099, X-Men 2099 y Fantastic Four 2099 entre otros.'),(6,'Marvel Noir','por alguna razón, la mayoría de los personajes no tienen poderes, a excepción de Spider-Man.'),(7,'Marvel Zombies','es el mundo de los muertos vivientes, en éste mundo los superhéroes y villanos son infectados por un virus alienígena que los convierte en zombies.'),(8,'Ucronías','es el universo donde los escritores se preguntaron “que hubiese pasado si...”. En esta línea temporal hay cosas que nunca sucedieron o sucedieron de forma diferente, por ejemplo Bruce Banner es mordido por una araña radioactiva que lo convierte en Spider-Man mientras que Peter Parker se inyecta la fórmula que lo convierte en Hulk.'),(9,'Larval Universe','también conocido como Tierra 8311, es el universo donde los personajes conocidos se presentan como una versión animal: Spider-Ham, Fantastic Fur y el Capitán Americat, entre otros.'),(10,'Tierra-001','La Tierra-001 es la realidad natal de Los Herederos y alberga los trofeos de mil mundos conquistados.'),(11,'Tierra-15513','La Tierra-15513 es una realidad dentro de la cual el Dios Emperador de Doom formó su Battleworld.'),(12,'Tierra-3145','Tierra-3145 es el hogar de Ben Parker, quien se convirtió en el hombre araña en esta realidad. Sin embargo, se retiró de Spider-Man después de que su esposa y su sobrino fueron asesinados por la Elf Esmeralda.'),(13,'Tierra-13','La Tierra-13 es una realidad alternativa del Universo 616. En este mundo Peter Parker fue elegido por la Fuerza Enigma y retuvo los poderes del Capitán Universo.'),(14,'Tierra-TRN588','Earth-TRN588 is a divergent reality similar to Earth-928, a reality where a second Age of Heroes began in the future of 2099 A.D. '),(15,'Multiverso','The Multiverse is the collection of alternate universes which share a universal hierarchy; it is a subsection of the larger Omniverse, the collection of all alternate universes. '),(16,'Tierra-6311','Other Earth\'s history is similar to the history of Earth-616 had the Dark Ages instead been filled with the great leaps of exploration and discovery characteristic of Earth\'s 20th century.');
 /*!40000 ALTER TABLE `Universo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -718,4 +727,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-17 17:28:53
+-- Dump completed on 2018-12-17 18:56:05

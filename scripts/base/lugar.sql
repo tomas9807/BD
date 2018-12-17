@@ -5,7 +5,7 @@ INSERT INTO Universo (id,nombre,descripcion) VALUES
 (3,'Ultimate','se puede decir que es el universo donde todo vuelve a comenzar. En este universo los superhéroes presentan características diferentes a las del original, por ejemplo, el Ultimate Spider-Man es Miles Morales que es una persona afroamericana con ascendencia latina.'),
 (4,'Age of Apocalypse','es producto de un accidente temporal cuando Legion, hijo del profesor X, viaja al pasado para asesinar a Magneto, pero por un error mata a su propio padre, lo que provoca el ascenso de Apocalipsis como señor de la Tierra. En este Universo, también conocido como Tierra 295, los humanos se revelan junto a Reed Richards y Tony Stark.'),
 (5,'Marvel 2099','es el universo del futuro en este lugar las grandes corporaciones controlan un mundo dividido por una guerra entre humanos y mutantes, aquí surgen historias como Spider- Man 2099, X-Men 2099 y Fantastic Four 2099 entre otros.'),
-(6,'Marvel Noir','por alguna razón, la mayoría de los personajes no tienen poderes, a excepción de Spider-Man.'),
+(6,'Marvel Noir (Tierra-90214)','por alguna razón, la mayoría de los personajes no tienen poderes, a excepción de Spider-Man.'),
 (7,'Marvel Zombies','es el mundo de los muertos vivientes, en éste mundo los superhéroes y villanos son infectados por un virus alienígena que los convierte en zombies.'),
 (8,'Ucronías','es el universo donde los escritores se preguntaron “que hubiese pasado si...”. En esta línea temporal hay cosas que nunca sucedieron o sucedieron de forma diferente, por ejemplo Bruce Banner es mordido por una araña radioactiva que lo convierte en Spider-Man mientras que Peter Parker se inyecta la fórmula que lo convierte en Hulk.'),
 (9,'Larval Universe','también conocido como Tierra 8311, es el universo donde los personajes conocidos se presentan como una versión animal: Spider-Ham, Fantastic Fur y el Capitán Americat, entre otros.'),
@@ -14,7 +14,8 @@ INSERT INTO Universo (id,nombre,descripcion) VALUES
 (12,'Tierra-3145','Tierra-3145 es el hogar de Ben Parker, quien se convirtió en el hombre araña en esta realidad. Sin embargo, se retiró de Spider-Man después de que su esposa y su sobrino fueron asesinados por la Elf Esmeralda.'),
 (13,'Tierra-13','La Tierra-13 es una realidad alternativa del Universo 616. En este mundo Peter Parker fue elegido por la Fuerza Enigma y retuvo los poderes del Capitán Universo.'),
 (14,'Tierra-TRN588','Earth-TRN588 is a divergent reality similar to Earth-928, a reality where a second Age of Heroes began in the future of 2099 A.D. '),
-(15,'Multiverso','The Multiverse is the collection of alternate universes which share a universal hierarchy; it is a subsection of the larger Omniverse, the collection of all alternate universes. ')
+(15,'Multiverso','The Multiverse is the collection of alternate universes which share a universal hierarchy; it is a subsection of the larger Omniverse, the collection of all alternate universes. '),
+(16,'Tierra-6311',"Other Earth's history is similar to the history of Earth-616 had the Dark Ages instead been filled with the great leaps of exploration and discovery characteristic of Earth's 20th century.")
 ;
 
 INSERT INTO Lugar (id,id_padre,nombre,tipo,tipo_geografico,descripcion) VALUES 
@@ -120,6 +121,7 @@ INSERT INTO Lugar (id,id_padre,nombre,tipo,tipo_geografico,descripcion) VALUES
 (109,22,'Idaho',NULL,'estado',NULL),
 (110,109,'Burton Canyon',NULL,'locale',NULL),
 (111,11,'Asgardia','mundo_mitologico',NULL,NULL),
-(112,22,'Oklahoma',NULL,'estado',NULL)
+(112,22,'Oklahoma',NULL,'estado',NULL),
+(113,55,'Central City',NULL,'ciudad',NULL)
 ;
 
