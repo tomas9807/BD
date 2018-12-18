@@ -4,6 +4,7 @@ from . import models
 from pprint import pprint
 from . import forms
 import os
+import random,string
 def get_lugares(id_hijo):
     lugares = []
     hijo = models.select_query(f""" 
@@ -289,26 +290,76 @@ def personajes_new(key):
 @app.route('/evento',methods=['POST','GET'])
 def evento():
     form = forms.EventoForm(request.form)
+
+    data = models.select_query(f""" 
+        SELECT p.id,p.nombre_original FROM Inscrito i,Personaje_Competidor p
+        WHERE p.id = (SELECT a.id FROM
+        Afiliacion_Personaje a 
+        WHERE 
+        a.id_competidor=p.id
+        )
+        GROUP BY i.grupo_id
+        )
+        """,False)
+    form.grupos_competidor.choices = data
     if request.method=='POST' and form.validate():
         pass
     else:
+        
         return render_template('form_evento.html',form=form)
 
 
 
-
+def id_generator_str(size=6, chars=string.ascii_uppercase + string.digits):
+    str =  ''.join(random.choice(chars) for _ in range(size))
+    return str
 
 
 @app.route('/grupo',methods=['POST','GET'])
 def grupo():
     form = forms.GrupoForm(request.form)
     form.competidor1.choices = models.select_query("SELECT id,nombre_original FROM Personaje_Competidor",False)
-    if request.method=='POST' and form.validate():
+    if request.method=='POST':
         competidor1_id = form.competidor1.data
         competidor2_id = form.competidor2.data
         competidor3_id = form.competidor3.data
-        grupo_uid = os.urandom(15)
-       
+        grupo_uid = id_generator_str(size=15)
+
+        print('aqui:',grupo_uid)
+        id_afi_per1 = models.select_query(f""" 
+        SELECT id FROM
+        Afiliacion_Personaje WHERE
+        id_competidor={competidor1_id}
+        """)[0]['id']
+        id_afi_per2 = models.select_query(f""" 
+        SELECT id FROM
+        Afiliacion_Personaje WHERE
+        id_competidor={competidor2_id}
+        """)[0]['id']
+        id_afi_per3 = models.select_query(f""" 
+        SELECT id FROM
+        Afiliacion_Personaje WHERE
+        id_competidor={competidor3_id}
+        """)[0]['id']
+
+
+        models.insert_query(
+            'Inscrito',
+            grupo_id=grupo_uid,
+            id_afiliacion_personaje=id_afi_per1
+        )
+        models.insert_query(
+            'Inscrito',
+            grupo_id=grupo_uid,
+            id_afiliacion_personaje=id_afi_per2
+        )
+        models.insert_query(
+            'Inscrito',
+            grupo_id=grupo_uid,
+            id_afiliacion_personaje=id_afi_per3
+        )
+        flash('grupo creado')
+        return redirect(url_for('grupo'))
         
     else:
         return render_template('form_grupo.html',form=form)
@@ -335,16 +386,11 @@ def list_competidores_avoid_pk():
             WHERE id_base={id_base}
             """,False
             )
-            print(f""" 
-            SELECT id,CONCAT(nombre_original,' (', afi.nombre,')')
-            FROM Personaje_Competidor p,Afiliacion afi
-            WHERE id <> {pk}
-            AND afi.id = {ids_afi[0][0]}
-            """)
+      
             data += models.select_query(f""" 
-            SELECT id,CONCAT(nombre_original,' (', afi.nombre,')')
+            SELECT p.id,CONCAT(nombre_original,' (', afi.nombre,')') as nombre_original
             FROM Personaje_Competidor p,Afiliacion afi
-            WHERE id <> {pk}
+            WHERE p.id <> {pk}
             AND afi.id = {ids_afi[0][0]}
             """)
     else:
@@ -356,23 +402,24 @@ def list_competidores_avoid_pk():
         FROM Afiliacion_Personaje
         WHERE id_competidor={pk2}
         """)
- 
-        id_base = id_base[0]['id_base_afiliacion']
-        ids_afi = models.select_query(f"""
-        SELECT id_afiliacion 
-        FROM Base_Afiliacion
-        WHERE id_base={id_base}
-        """,False
-        )
-
-        data = models.select_query(f""" 
-        SELECT p.id,p.nombre_original,afi.nombre
-        FROM Personaje_Competidor p,Afilacion afi
-        
-        WHERE id <> {pk1} 
-        AND id <> {pk2}
-        AND afi.id IN {ids_afi}
+        data = []
+        for idb in id_base:
+            id_base = idb['id_base_afiliacion']
+            ids_afi = models.select_query(f"""
+            SELECT id_afiliacion 
+            FROM Base_Afiliacion
+            WHERE id_base={id_base}
+            """,False
+            )
+      
+            data += models.select_query(f""" 
+        SELECT p.id,CONCAT(nombre_original,' (', afi.nombre,')') as nombre_original
+        FROM Personaje_Competidor p,Afiliacion afi
+        WHERE p.id <> {pk1} 
+        AND p.id <> {pk2}
+        AND afi.id = {ids_afi[0][0]}
         """)
+        
 
     return jsonify(data)
     
