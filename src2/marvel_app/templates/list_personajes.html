@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+{% if data %}
+
+{% for p in data %}
+
+<hr>
+<h3><a href="{{url_for('personajes',key='competidores',pk=p.id)}}"> 
+    {{p.nombre_real}} 
+
+    {% if p.apellido_real %}  
+
+    {{p.apellido_real}}
+
+    {% endif %}
+
+
+    {% if p.universo %} ({{p.universo}}) {% endif %}
+
+</a>
+    
+</h3>
+{% if p.nombre_original %}  
+<h5>{{p.nombre_original}}</h5>
+{% endif %}
+<hr>
+
+
+
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock content %}

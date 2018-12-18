@@ -16,7 +16,7 @@
             "name": "Python: flask (Integrated Terminal)",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/run.py",
+            "program": "${workspaceFolder}/src2/run.py",
             "console": "integratedTerminal"
         },
         {
