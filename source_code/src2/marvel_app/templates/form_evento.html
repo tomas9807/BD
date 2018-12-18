@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+ <form action="{{url_for('evento')}}" method="post" novalidate>
+
+    <a  href="{{url_for('grupo')}}"  class="btn btn-primary">Nuevo Grupo</a>
+  <br>
+    {% if not grupos_competidor %}
+     No hay grupos cree un grupo!
+     {% else %}
+     <input type="submit" class="btn btn-primary" value="Aceptar">
+     {{ render_field(grupos_competidor)}} 
+    {% endif %}
+    
+    <br>  
+
+ 
+ </form>
+
+
+
+{% endblock content %}

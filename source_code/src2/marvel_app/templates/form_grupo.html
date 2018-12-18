@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+ <form action="{{url_for('grupo')}}" method="post" novalidate>
+
+    
+  <br>
+    
+     {{ render_field(form.competidor1)}} 
+     {{ render_field(form.competidor2)}} 
+     {{ render_field(form.competidor3)}} 
+    
+    <br>  
+    <input type="submit" class="btn btn-primary" value="Aceptar">
+ 
+ </form>
+
+ <script>
+ 
+
+
+ var list_competidor1 = document.getElementById('competidor1');
+ var list_competidor2 = document.getElementById('competidor2');
+ var list_competidor3 = document.getElementById('competidor3');
+
+
+list_competidor1.onchange = function(){
+    let value = list_competidor1.options[list_competidor1.selectedIndex].value;
+    let url = '/avoid/list_competidores/';
+    let json = JSON.stringify(
+        {
+            'id':value
+        }
+    );
+    removeOptions(list_competidor2);
+    removeOptions(list_competidor3);
+
+    send_ajax_call(json,url,list_competidor2);
+    
+    
+}
+
+list_competidor2.onchange = function(){
+    let value1 = list_competidor1.options[list_competidor1.selectedIndex].value;
+    let value2 = list_competidor2.options[list_competidor2.selectedIndex].value;
+    let url = '/avoid/list_competidores/';
+    let json = JSON.stringify(
+        {
+            'id1':value1,
+            'id2':value2,
+        }
+    );
+    removeOptions(list_competidor3);
+
+    send_ajax_call(json,url,list_competidor3);
+    
+}
+
+
+
+
+
+ function update_html_list(html_list,array){
+    console.log('array',array);
+    let optionhtml = '';
+    //Create and append the options
+    for (var i = 0; i < array.length; i++) {
+        optionhtml += '<option value="' + array[i].id + '">' + array[i].nombre_original + '</option>';
+
+    }
+
+    
+    html_list.innerHTML = optionhtml;
+    html_list.onchange();
+
+  }
+
+function send_ajax_call(json,url,list=false){
+   
+   var xmlhttp = new XMLHttpRequest();
+   xmlhttp.open("POST", url,true);
+   xmlhttp.setRequestHeader("Content-Type", "application/json");
+   if (list){
+     xmlhttp.onreadystatechange = function () {
+   if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+     
+       var json_received = JSON.parse(xmlhttp.responseText);
+       console.log('json_received: ',json_received);
+       update_html_list(list,json_received);
+     
+
+   }
+    };
+   }
+   
+   console.log('json_sent: ',json);
+   xmlhttp.send(json);
+   
+   }
+
+
+    function removeOptions(selectbox)
+{
+    var i;
+    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+    {
+        selectbox.remove(i);
+    }
+}
+  
+
+ </script>
+
+{% endblock content %}
