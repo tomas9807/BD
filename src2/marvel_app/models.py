@@ -43,7 +43,7 @@ def insert_query(table,**kwargs):
     with closing(get_connection_marvelBD()) as conn:
         try:
             cur = conn.cursor()
-           
+            print(kwargs.values())
             cur.execute(f"""
             insert into {table} {tuple(kwargs.keys())} 
             values ({','.join('%s' for var in kwargs)})

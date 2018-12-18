@@ -69,7 +69,13 @@ CREATE TABLE `Afiliacion_Personaje` (
 
 LOCK TABLES `Afiliacion_Personaje` WRITE;
 /*!40000 ALTER TABLE `Afiliacion_Personaje` DISABLE KEYS */;
-INSERT INTO `Afiliacion_Personaje` VALUES (1,1,NULL,3,NULL),(2,1,NULL,6,NULL),(3,1,NULL,7,NULL),(4,1,NULL,8,NULL),(5,1,NULL,5,NULL),(6,1,NULL,9,NULL),(7,1,NULL,10,NULL),(8,1,NULL,11,NULL),(9,1,NULL,12,NULL),(10,1,NULL,13,NULL),(11,1,NULL,14,NULL),(12,1,NULL,15,NULL),(13,1,NULL,16,NULL),(14,1,NULL,17,NULL);
+INSERT INTO `Afiliacion_Personaje` VALUES (1,1,NULL,3,NULL),(2,1,NULL,6,NULL),(3,1,NULL,7,NULL),(4,1,NULL,8,NULL),(5,1,NULL,5,NULL),(6,1,NULL,9,NULL),(7,1,NULL,10,NULL),(8,1,NULL,11,NULL),(9,1,NULL,12,NULL),(10,1,NULL,13,NULL),(11,1,NULL,36,NULL),
+(12,2,NULL,14,NULL),(13,2,NULL,15,NULL),(14,2,NULL,16,NULL),(15,2,NULL,17,NULL),
+(16,3,NULL,18,NULL),(17,3,NULL,19,NULL),(18,3,NULL,8,NULL),(19,3,NULL,20,NULL),
+(20,4,NULL,21,NULL),(21,4,NULL,22,NULL),(22,4,NULL,23,NULL),(23,4,NULL,24,NULL),
+(24,5,NULL,25,NULL),(25,5,NULL,26,NULL),(26,5,NULL,27,NULL),(27,5,NULL,28,NULL),
+(28,6,NULL,29,NULL),(29,6,NULL,30,NULL),(30,6,NULL,31,NULL),(31,6,NULL,32,NULL)
+;
 /*!40000 ALTER TABLE `Afiliacion_Personaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,9 +357,9 @@ DROP TABLE IF EXISTS `Inscrito`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `Inscrito` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_evento` int(10) unsigned NOT NULL,
+  `id_evento` int(10) unsigned NULL,
   `puntos_etapa1` tinyint(3) unsigned DEFAULT NULL,
-  `grupo_id` int(10) unsigned NOT NULL,
+  `grupo_id` char(15) NOT NULL,
   `id_afiliacion_personaje` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_evento` (`id_evento`),
@@ -655,7 +661,7 @@ CREATE TABLE `Relacion` (
   `id_competidor2` int(10) unsigned DEFAULT NULL,
   `id_personaje1` int(10) unsigned DEFAULT NULL,
   `id_personaje2` int(10) unsigned DEFAULT NULL,
-  `tipo_relacion` enum('pariente','enemigo','aliado',) NOT NULL,
+  `tipo_relacion` enum('pariente','enemigo','aliado') NOT NULL,
   `tipo_relacion_pariente` enum('padre','hermano','primo','tio') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_personaje1` (`id_personaje1`),

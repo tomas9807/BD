@@ -3,6 +3,7 @@ from flask import render_template,redirect,flash,request,jsonify,json,url_for
 from . import models
 from pprint import pprint
 from . import forms
+import os
 def get_lugares(id_hijo):
     lugares = []
     hijo = models.select_query(f""" 
@@ -187,6 +188,10 @@ def personajes_new(key):
        
     form.parafernalia.choices = models.select_query("SELECT id,nombre FROM Parafernalia",False)
 
+    form.afiliaciones.choices = models.select_query("SELECT id,nombre FROM Afiliacion",False)
+    colores = models.select_query("SELECT id,nombre FROM Color",False)
+    form.color_ojos.choices = colores
+    form.color_pelo.choices = colores
     
     if request.method == 'POST':
         if key=='competidores':
@@ -213,7 +218,64 @@ def personajes_new(key):
             afiliacion = form.afiliacion.data
             poderes = form.poderes.data
             parafernalia = form.parafernalia.data
-           
+            afiliaciones = form.afiliaciones.data
+            moralidades =  ('heroe','antiheroe','villano')
+            models.insert_query('Personaje_Competidor',
+            nombre_original=nombre_original,
+            nombre_real=nombre_real,
+            apellido_real = apellido_real,
+            biografia=biografia,
+            identidad= 'publica' if identidad==0 else 'anonima',
+            moralidad=moralidades[int(moralidad)],
+            altura=altura1,
+            altura_opcional=altura2,
+            peso=peso1,
+            peso_opcional=peso2,
+            estado_civil='casado' if estado_civil==0 else 'soltero',
+            genero = 'M' if genero==0 else 'F',
+            color_ojos_id = color_ojos,
+            color_pelo_id = color_pelo,
+            id_universo = universo
+            )
+            id_competidor = models.select_query('SELECT MAX(id) FROM Personaje_Competidor',False)[0][0]
+            for al1,al2 in zip(form.otros_alias.choices,otros_alias):
+                if int(al1[0])==int(al2[0]):
+                    models.insert_query(
+                        'Alias',
+                        id_competidor=id_competidor,
+                        nombre=al2[1]
+                    )
+            for prof in profesion:
+                models.insert_query(
+                    'Profesion_Competidor',
+                    id_competidor=id_competidor,
+                    id_profesion=prof
+                )
+            for poder in poderes:
+                models.insert_query(
+                    'Poder_Competidor',
+                    id_competidor=id_competidor,
+                    id_poder=poder
+                )
+            for para in parafernalia:
+                models.insert_query(
+                    'Parafernalia_Competidor',
+                    id_competidor=id_competidor,
+                    id_parafernalia=para
+                )
+            
+            for afi in afiliaciones:
+                afiliacion_base = models.select_query(f""" 
+            SELECT id FROM Base_Afiliacion  
+            WHERE id_afiliacion={afi}
+            """)[0]
+                models.insert_query(
+                    'Afiliacion_Competidor',
+                    id_competidor=id_competidor,
+                    id_base_afiliacion=afiliacion_base['id']
+                )
+
+        
             flash(f'Se ha registrado un personaje competidor ({nombre_real})')
             return redirect(url_for('personajes',key=key))
         
@@ -224,8 +286,96 @@ def personajes_new(key):
         return render_template('form_personajes.html',form=form)
         
         
+@app.route('/evento',methods=['POST','GET'])
+def evento():
+    form = forms.EventoForm(request.form)
+    if request.method=='POST' and form.validate():
+        pass
+    else:
+        return render_template('form_evento.html',form=form)
 
 
+
+
+
+
+@app.route('/grupo',methods=['POST','GET'])
+def grupo():
+    form = forms.GrupoForm(request.form)
+    form.competidor1.choices = models.select_query("SELECT id,nombre_original FROM Personaje_Competidor",False)
+    if request.method=='POST' and form.validate():
+        competidor1_id = form.competidor1.data
+        competidor2_id = form.competidor2.data
+        competidor3_id = form.competidor3.data
+        grupo_uid = os.urandom(15)
+       
+        
+    else:
+        return render_template('form_grupo.html',form=form)
+
+    
+@app.route('/avoid/list_competidores/',methods=['POST'])
+def list_competidores_avoid_pk():
+    json_received = request.json
+
+    if len(json_received.keys())==1:
+        pk = json_received['id']
+
+        id_base = models.select_query(f""" 
+        SELECT id_base_afiliacion 
+        FROM Afiliacion_Personaje
+        WHERE id_competidor={pk}
+        """)
+        data = []
+        for idb in id_base:
+            id_base = idb['id_base_afiliacion']
+            ids_afi = models.select_query(f"""
+            SELECT id_afiliacion 
+            FROM Base_Afiliacion
+            WHERE id_base={id_base}
+            """,False
+            )
+            print(f""" 
+            SELECT id,CONCAT(nombre_original,' (', afi.nombre,')')
+            FROM Personaje_Competidor p,Afiliacion afi
+            WHERE id <> {pk}
+            AND afi.id = {ids_afi[0][0]}
+            """)
+            data += models.select_query(f""" 
+            SELECT id,CONCAT(nombre_original,' (', afi.nombre,')')
+            FROM Personaje_Competidor p,Afiliacion afi
+            WHERE id <> {pk}
+            AND afi.id = {ids_afi[0][0]}
+            """)
+    else:
+        pk1 = json_received['id1']
+        pk2 = json_received['id2']
+
+        id_base = models.select_query(f""" 
+        SELECT id_base_afiliacion 
+        FROM Afiliacion_Personaje
+        WHERE id_competidor={pk2}
+        """)
+ 
+        id_base = id_base[0]['id_base_afiliacion']
+        ids_afi = models.select_query(f"""
+        SELECT id_afiliacion 
+        FROM Base_Afiliacion
+        WHERE id_base={id_base}
+        """,False
+        )
+
+        data = models.select_query(f""" 
+        SELECT p.id,p.nombre_original,afi.nombre
+        FROM Personaje_Competidor p,Afilacion afi
+        
+        WHERE id <> {pk1} 
+        AND id <> {pk2}
+        AND afi.id IN {ids_afi}
+        """)
+
+    return jsonify(data)
+    
 
 
 
