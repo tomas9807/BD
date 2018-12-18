@@ -2,9 +2,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<a class="btn btn-primary" href="{{url_for('personajes_new',key='competidores')}}" >Nuevo Personaje Competidor</a>
 {% if data %}
 
 {% for p in data %}
+
+
 
 <hr>
 <h3><a href="{{url_for('personajes',key='competidores',pk=p.id)}}"> 

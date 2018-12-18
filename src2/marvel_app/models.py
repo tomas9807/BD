@@ -24,11 +24,11 @@ def get_connection_marvelBD():
 
     
 
-def select_query(query):
+def select_query(query,dictionary=True):
     with closing(get_connection_marvelBD()) as conn:
         try:
             
-            cur = conn.cursor(dictionary=True)
+            cur = conn.cursor(dictionary=dictionary)
             cur.execute(query)
             data = cur.fetchall()
             

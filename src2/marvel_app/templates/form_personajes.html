@@ -1,0 +1,79 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{{url_for('personajes_new',key='competidores')}}" method="post" id="form_personajes" class="my-5 container" novalidate>
+        {{ form.hidden_tag() }}
+        
+        {% if on_edit is defined %}
+   
+        <button type="button"  id="btn_editar" onclick="enable_editar()"  class="btn btn-primary">Editar</button>
+        
+        {% endif %}
+
+  
+
+  {{ render_field(form.nombre_original) }} 
+  {{ render_field(form.nombre_real) }}   
+  {{ render_field(form.apellido_real) }}  
+  {{ render_field(form.universo) }}  <br>
+    {% if lugar_nacimiento %}
+
+    Lugar de Nacimiento: <input type="text" value="{{lugar_nacimiento}}" name="lugar_nacimiento">
+
+    {% else %}
+    Lugar de Nacimiento: <input type="text" value="" name="lugar_nacimiento"> 
+    {% endif %} 
+    <br>
+    {{ render_field(form.otros_alias)}} 
+    {{ render_field(form.biografia)}} 
+    {{ render_field(form.genero)}}
+    {{ render_field(form.identidad)}}  
+    {{ render_field(form.moralidad) }} 
+    {{ render_field(form.altura1) }} 
+    {{ render_field(form.altura2)}} 
+    {{ render_field(form.peso1) }} 
+    {{ render_field(form.peso2) }}  
+   
+    {{ render_field(form.profesion)}} 
+    {{ render_field(form.parientes)}} 
+    {{ render_field(form.enemigos)}} 
+    {{ render_field(form.aliados) }} 
+     {{ render_field(form.poderes) }} 
+     {{ render_field(form.parafernalia) }} 
+
+    <input type="submit" id='btn_aceptar' class= "btn btn-primary" value="Aceptar">
+
+  
+
+
+</form>
+{% if on_edit is defined %}
+<script>
+
+var nodes = document.getElementById("form_personajes").getElementsByTagName('*');
+for(var i = 0; i < nodes.length; i++){
+     nodes[i].disabled = true;
+}
+
+ let btn_editar = document.getElementById("btn_editar");
+ let btn_aceptar = document.getElementById("btn_aceptar");
+ btn_aceptar.style.display = 'none';
+ btn_editar.disabled = false;
+ 
+function enable_editar(){
+    var nodes = document.getElementById("form_personajes").getElementsByTagName('*');
+for(var i = 0; i < nodes.length; i++){
+     nodes[i].disabled = false;
+}
+btn_aceptar.style.display = 'initial';
+btn_editar.style.display = 'none';
+}
+
+
+
+</script>
+{% endif %}
+
+{% endblock content %}

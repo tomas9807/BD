@@ -1,13 +1,13 @@
 INSERT INTO Personaje_NoCompetidor 
-(nombre_original,nombre_real,apellido_real,fallecido,genero,id_universo,id_lugar_nacimiento)
+(id,nombre_original,nombre_real,apellido_real,fallecido,genero,id_universo,id_lugar_nacimiento)
 VALUES 
-('Major John Richards','John','Richards',null,'M',1,22),
-(null,'Ted','Richards',true,'M',1,22),
-('The Warlord','Nathaniel',' Richards',false,'M',1,22),
-(null,'Evelyn',' Richards',false,'F',1,22), /*por continuar */
-(null,'May',' Parker',null,'F',6,22), 
-(null,'Benjamin',' Parker',true,'M',6,22), /*por continuar */
-('Yu-Ti','Nu','An',true,'M',1,99); /*por continuar */
+(1,'Major John Richards','John','Richards',null,'M',1,22),
+(2,null,'Ted','Richards',true,'M',1,22),
+(3,'The Warlord','Nathaniel',' Richards',false,'M',1,22),
+(4,null,'Evelyn',' Richards',false,'F',1,22), /*por continuar */
+(5,null,'May',' Parker',null,'F',6,22), 
+(6,null,'Benjamin',' Parker',true,'M',6,22), /*por continuar */
+(7,'Yu-Ti','Nu','An',true,'M',1,99); /*por continuar */
 
 
 INSERT INTO Personaje_Competidor
